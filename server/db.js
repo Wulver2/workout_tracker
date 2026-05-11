@@ -10,4 +10,4 @@ const pool = new Pool({
     database: "workouts"
 });
 
-module.exports = pool
+module.exports = pool;
