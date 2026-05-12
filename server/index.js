@@ -4,6 +4,7 @@ const cors = require("cors");
 const pool = require("./db");
 
 app.use(cors());
+
 app.use(express.json());
 
 //ROUTES for exercises
@@ -17,12 +18,13 @@ app.get("/exercises", async(req, res) => {
     }
     catch (err) {
         console.error(err.message);
+        res.status(500).json({ error: "Server error" });
     }
 })
 
 // get a specific exercise
 
 
-app.listen(5000, () => {
-    console.log("server 5000 is on");
+app.listen(8080, () => {
+    console.log("server 8080 is on");
 });
