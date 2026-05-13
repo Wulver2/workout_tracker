@@ -21,6 +21,13 @@ const ListExercises = () => {
     <Fragment>
         <h1>Exercises</h1>
         <table>
+            <thead>
+                <tr>
+                    <th>Name of exercise</th>
+                    <th>Muscles targeted</th>
+                    <th>Equipment needed</th>
+                </tr>
+            </thead>
             <tbody>
                 {exercises.map(exercise => (
                     <tr key={exercise.exercise_id}>
