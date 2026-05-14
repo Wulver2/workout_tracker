@@ -7,7 +7,7 @@ app.use(cors());
 
 app.use(express.json());
 
-//ROUTES for exercises
+// EXERCISE ROUTES
 
 // get all exercises
 
@@ -20,10 +20,20 @@ app.get("/exercises", async(req, res) => {
         console.error(err.message);
         res.status(500).json({ error: "Server error" });
     }
-})
+});
 
-// get a specific exercise
+// get exercise based on muscle targeted
 
+app.get("/exercises/:muscle", async(req, res) => {
+    try {
+        const { muscle } = req.params;
+        const matchExercise = await pool.query(`SELECT * FROM exercises WHERE '${muscle}' = ANY (muscle_groups)`);
+        res.json(matchExercise.rows);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: "Server error" });
+    }
+});
 
 app.listen(8080, () => {
     console.log("server 8080 is on");
