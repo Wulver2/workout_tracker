@@ -32,7 +32,7 @@ const ListExercises = () => {
                 {exercises.map(exercise => (
                     <tr key={exercise.exercise_id}>
                         <td>{exercise.name}</td>
-                        <td>{exercise.muscle_groups}</td>
+                        <td>{exercise.muscle_groups.join(", ")}</td>
                         <td>{exercise.equipment}</td>
                     </tr>
                 ))}
