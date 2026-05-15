@@ -8,8 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 // EXERCISE ROUTES
-
-// get all exercises
+// Get all exercises
 
 app.get("/exercises", async(req, res) => {
     try {
@@ -22,8 +21,7 @@ app.get("/exercises", async(req, res) => {
     }
 });
 
-// get exercise based on muscle targeted
-
+// Get exercise based on muscle targeted
 app.get("/exercises/:muscle", async(req, res) => {
     try {
         const { muscle } = req.params;
@@ -34,6 +32,38 @@ app.get("/exercises/:muscle", async(req, res) => {
         res.status(500).json({ error: "Server error" });
     }
 });
+
+// Get exercise based on if equipment is needed
+app.get("/exercises/:equipment", async(req, res) => {
+    try {
+        const { equipment } = req.params;
+        const matchExercise = await pool.query(`SELECT * FROM exercises WHERE equipment = '${equipment}'`);
+        res.json(matchExercise.rows);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: "Server error" });
+    }
+});
+
+// ROUTES for prev_workout
+// Create (not really creating new one, just 
+// adding workout_session id to table once finished)
+// Get
+// Edit(similar to create)
+// (Should old workouts be able to be deleted by users?)
+
+
+// ROUTES for workout_session
+// Create
+// Get
+// Edit
+// Delete
+
+// ROUTES for exercise_sets
+// Create
+// Get
+// Edit
+// Delete
 
 app.listen(8080, () => {
     console.log("server 8080 is on");
