@@ -55,8 +55,35 @@ app.get("/exercises/:equipment", async(req, res) => {
 
 // ROUTES for workout_session
 // Create
+app.post("/workout", async(req, res) => {
+    // TODO: add request body to the query
+    // Need to create exercise set data before workout can be created
+    try {
+        const newSession = await pool.query(`INSERT INTO workout_session ()`);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
 // Get
+app.get("/workout", async(req, res) => {
+    try {
+        const workouts = await pool.query("SELECT * FROM workout_session");
+        res.json(worlouts.allrows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 // Edit
+app.put("/workout/:id", async(req,res) =>{
+    // need to get req body
+    // should sessions be editable or should only the exercises within be?
+    try {
+        await pool.query(`UPDATE workout_session SET     WHERE session_id = ${id}`)
+    } catch (err) {
+        console.error(err.message);
+    }
+});
 // Delete
 
 // ROUTES for exercise_sets
