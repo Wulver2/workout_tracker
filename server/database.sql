@@ -17,12 +17,16 @@ CREATE TABLE exercises(
 --);
 
 -- individual workouts
---CREATE TABLE workout_session(
+CREATE TABLE workout_session(
     -- id, Array[exercise set id], time
---);
+    session_id SERIAL PRIMARY KEY,
+    exercise_data INT[],
+    day_of_session date 
+);
 
 --CREATE TABLE exercise_sets (
     -- personal id, exercise id, reps, sets, rir optional, rest between sets
     -- rate of perceived exertion(RPE) optional, notes optional
+    
 --);
 
