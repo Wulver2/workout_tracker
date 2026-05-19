@@ -5,6 +5,7 @@ export function Navbar() {
         <>
             <Link to="/">Home</Link>
             <Link to="/exercises">Browse Exercises</Link>
+            <Link to="/new_Workout"> Create New Workout</Link>
         </>
     )
 }
