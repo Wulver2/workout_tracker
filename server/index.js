@@ -56,10 +56,14 @@ app.get("/exercises/:equipment", async(req, res) => {
 // ROUTES for workout_session
 // Create
 app.post("/workout", async(req, res) => {
-    // TODO: add request body to the query
-    // Need to create exercise set data before workout can be created
     try {
-        const newSession = await pool.query(`INSERT INTO workout_session ()`);
+        const {name, exercises, date} = req.body;
+        const newSession = await pool.query(
+            `INSERT INTO workout_session (name, exercise_data, day_of_session)
+            VALUES (${name}, ${exercises}, ${date}) RETURNING *`);
+
+            // To see new session
+            res.json(newSession.rows[0]);
     } catch (err) {
         console.error(err.message);
     }
@@ -75,7 +79,7 @@ app.get("/workout", async(req, res) => {
 });
 
 // Edit
-app.put("/workout/:id", async(req,res) =>{
+app.put("/workout/:id", async(req, res) =>{
     // need to get req body
     // should sessions be editable or should only the exercises within be?
     try {
@@ -88,7 +92,22 @@ app.put("/workout/:id", async(req,res) =>{
 
 // ROUTES for exercise_sets
 // Create
+app.post("/exercise_sets", async(req, res) => {
+    try {
+        // exercise id, reps, sets, rir
+        
+    } catch (error) {
+        
+    }
+});
 // Get
+app.get("/exercise_sets", async(req, res) => {
+    try {
+        await pool.query('SELECT * FROM exercise_sets');
+    } catch (err) {
+        console.error(err.message);
+    }
+});
 // Edit
 // Delete
 
