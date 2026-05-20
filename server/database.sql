@@ -24,9 +24,18 @@ CREATE TABLE workout_session(
     day_of_session date 
 );
 
---CREATE TABLE exercise_sets (
+ALTER TABLE workout_session ADD name TEXT;
+
+CREATE TABLE exercise_sets (
+    exercise_sets_id SERIAL PRIMARY KEY,
+    exercise_id INT,
+    FOREIGN KEY (exercise_id)
+    REFERENCES exercises(exercise_id),
+    reps INT,
+    sets_performed INT,
+    RIR INT
     -- personal id, exercise id, reps, sets, rir optional, rest between sets
     -- rate of perceived exertion(RPE) optional, notes optional
     
---);
+);
 
