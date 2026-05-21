@@ -38,6 +38,13 @@ const CreateWorkout = () => {
     const removeExercise = () => {
 
     };
+
+    const updateExercise = (index, field, value) => {
+        const update = [...sessionExercises];
+        update[index][field] = value;
+        setSessionExercises(update);
+        console.log(sessionExercises[index]);
+    }
     // TODO: Find way to implement exercise array so that
     // when an exercise is selected, queries user for sets,
     // reps, etc
@@ -53,21 +60,28 @@ const CreateWorkout = () => {
 
                 <label htmlFor="exercises_array">Exercises</label>
 
-                {/* exercise dropdown */}
-                <select name="" id="">
-                   {availableExercises.map(ex => (
-                    <option value={ex.exercise_id} key={ex.exercise_id}>{ex.name}</option>
-                   ))}
-                </select>
+                {sessionExercises.map((fields, index) => (
+                    <div key={index}>
+                    {/* exercise dropdown */}
+                    <select name="" id="">
+                    {availableExercises.map(ex => (
+                        <option value={ex.exercise_id} key={ex.exercise_id}>{ex.name}</option>
+                    ))}
+                    </select>
 
-                {/* sets */}
-                <input type="number" />
-                {/* reps */}
-                <input type="number" />
-                {/* rir */}
-                <input type="number" />
+                    {/* sets */}
+                    <input type="number" placeholder="Sets" onChange=
+                    {(e) => updateExercise(index,"sets", e.target.value)} min={1} required/>
+                    {/* reps */}
+                    <input type="number" placeholder="Reps" onChange={updateExercise} min={1} required/>
+                    {/* rir */}
+                    <input type="number" placeholder="RIR" onChange={updateExercise} min={0}/>
+                    </div>
+                ))}
                 {/* add exercise */}
                 <button type="button" onClick={addExercise}>+ Add Exercise</button>
+                {/* remove exercise */}
+                <button type="button"> Remove Exercise</button>
                 <button type="submit">Submit</button>
             </form>
         </Fragment>
