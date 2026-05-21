@@ -10,7 +10,9 @@ const CreateWorkout = () => {
                         currentDate.getDate + "/" + currentDate.getFullYear;
 
     const [name, setName] = useState("workout");
-    const [exercises, setExercises] = useState([]);
+    const [sessionExercises, setSessionExercises] = useState([
+        { exercise_id: '', sets_performed: '', reps: '', rir: '' }
+    ]);
     const [date, setDate] = useState(defaultDate);
 
     //Send query to get exercises
@@ -28,6 +30,14 @@ const CreateWorkout = () => {
     useEffect(()=> {
         getAvailableExercises();
     },[]);
+
+    const addExercise = () => {
+        setSessionExercises([...sessionExercises, { exercise_id: '', sets_performed: '', reps: '', rir: '' }]);
+        console.log("added Exercise " + sessionExercises);
+    };
+    const removeExercise = () => {
+
+    };
     // TODO: Find way to implement exercise array so that
     // when an exercise is selected, queries user for sets,
     // reps, etc
@@ -43,14 +53,22 @@ const CreateWorkout = () => {
 
                 <label htmlFor="exercises_array">Exercises</label>
 
-                {/*dropdown */}
+                {/* exercise dropdown */}
                 <select name="" id="">
                    {availableExercises.map(ex => (
-                    <option value={ex.exercise_id}>{ex.name}</option>
+                    <option value={ex.exercise_id} key={ex.exercise_id}>{ex.name}</option>
                    ))}
                 </select>
 
-                <button>Submit</button>
+                {/* sets */}
+                <input type="number" />
+                {/* reps */}
+                <input type="number" />
+                {/* rir */}
+                <input type="number" />
+                {/* add exercise */}
+                <button type="button" onClick={addExercise}>+ Add Exercise</button>
+                <button type="submit">Submit</button>
             </form>
         </Fragment>
     );
