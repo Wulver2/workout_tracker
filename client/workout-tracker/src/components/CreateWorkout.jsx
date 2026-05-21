@@ -31,9 +31,14 @@ const CreateWorkout = () => {
         getAvailableExercises();
     },[]);
 
+    const updateName = (value) => {
+        setName(value);
+        console.log(value);
+    }
+
     const addExercise = () => {
         setSessionExercises([...sessionExercises, { exercise_id: '', sets_performed: '', reps: '', rir: '' }]);
-        console.log("added Exercise " + sessionExercises);
+        console.log(sessionExercises);
     };
     const removeExercise = () => {
 
@@ -45,15 +50,17 @@ const CreateWorkout = () => {
         setSessionExercises(update);
         console.log(sessionExercises[index]);
     }
-    // TODO: Find way to implement exercise array so that
-    // when an exercise is selected, queries user for sets,
-    // reps, etc
+
+    const handleSubmit = () => {
+
+    };
+
     return (
         <Fragment>
             <h1>Create a new Workout</h1>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <label htmlFor="workout_name">Name of Workout: </label>
-                <input type="text" id="workout_name" value={name}/>
+                <input type="text" id="workout_name" value={name} onChange={(e) => updateName(e.target.value)}/>
 
                 <label htmlFor="workout_date">date</label>
                 <input type="date" id="workout_date" value={date}/>
