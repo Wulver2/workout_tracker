@@ -71,11 +71,13 @@ const CreateWorkout = () => {
 
                     {/* sets */}
                     <input type="number" placeholder="Sets" onChange=
-                    {(e) => updateExercise(index,"sets", e.target.value)} min={1} required/>
+                    {(e) => updateExercise(index,"sets_performed", e.target.value)} min={1} required/>
                     {/* reps */}
-                    <input type="number" placeholder="Reps" onChange={updateExercise} min={1} required/>
+                    <input type="number" placeholder="Reps" onChange=
+                    {(e) => updateExercise(index, "reps", e.target.value)} min={1} required/>
                     {/* rir */}
-                    <input type="number" placeholder="RIR" onChange={updateExercise} min={0}/>
+                    <input type="number" placeholder="RIR" onChange=
+                    {(e) => updateExercise(index, "rir", e.target.value)} min={0}/>
                     </div>
                 ))}
                 {/* add exercise */}
