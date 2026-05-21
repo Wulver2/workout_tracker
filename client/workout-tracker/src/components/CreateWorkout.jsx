@@ -6,8 +6,8 @@ const CreateWorkout = () => {
     const [availableExercises, setAvailableExercises] = useState([]);
 
     const currentDate = new Date();
-    const defaultDate = (currentDate.getMonth + 1) + "/" +
-                        currentDate.getDate + "/" + currentDate.getFullYear;
+    const defaultDate = (currentDate.getMonth + 1) + "-" +
+                        currentDate.getDate + "-" + currentDate.getFullYear;
 
     const [name, setName] = useState("workout");
     const [sessionExercises, setSessionExercises] = useState([
@@ -33,8 +33,12 @@ const CreateWorkout = () => {
 
     const updateName = (value) => {
         setName(value);
+    };
+
+    const updateDate = (value) => {
+        setDate(value);
         console.log(value);
-    }
+    };
 
     const addExercise = () => {
         setSessionExercises([...sessionExercises, { exercise_id: '', sets_performed: '', reps: '', rir: '' }]);
@@ -48,7 +52,6 @@ const CreateWorkout = () => {
         const update = [...sessionExercises];
         update[index][field] = value;
         setSessionExercises(update);
-        console.log(sessionExercises[index]);
     }
 
     const handleSubmit = () => {
@@ -60,10 +63,12 @@ const CreateWorkout = () => {
             <h1>Create a new Workout</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="workout_name">Name of Workout: </label>
-                <input type="text" id="workout_name" value={name} onChange={(e) => updateName(e.target.value)}/>
+                <input type="text" id="workout_name" value={name} onChange=
+                {(e) => updateName(e.target.value)} required/>
 
                 <label htmlFor="workout_date">date</label>
-                <input type="date" id="workout_date" value={date}/>
+                <input type="date" id="workout_date" value={date} onChange=
+                {(e) => updateDate(e.target.value)}/>
 
                 <label htmlFor="exercises_array">Exercises</label>
 
