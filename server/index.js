@@ -57,10 +57,10 @@ app.get("/exercises/:equipment", async(req, res) => {
 // Create
 app.post("/workout", async(req, res) => {
     try {
-        const {name, exercises, date} = req.body;
+        const {name, exercise_ids, date} = req.body;
         const newSession = await pool.query(
             `INSERT INTO workout_session (name, exercise_data, day_of_session)
-            VALUES (${name}, ${exercises}, ${date}) RETURNING *`);
+            VALUES (${name}, ${exercise_ids}, ${date}) RETURNING *`);
 
             // To see new session
             res.json(newSession.rows[0]);
@@ -95,7 +95,11 @@ app.put("/workout/:id", async(req, res) =>{
 app.post("/exercise_sets", async(req, res) => {
     try {
         // exercise id, reps, sets, rir
-        
+        const {exercise_id, reps, sets, rir} = req.body
+        const newExercisePerformed = pool.query(
+            `INSERT INTO exercise_sets (exercise_id, reps, sets_performed, rir)
+             VALUES ${exercise_id}, ${reps}, ${sets}, ${rir}`);
+                
     } catch (error) {
         
     }

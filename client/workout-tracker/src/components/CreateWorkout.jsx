@@ -57,6 +57,8 @@ const CreateWorkout = () => {
     const handleSubmit = () => {
         // on submit sends query to exercise_set table? for ids, then
         // inserts name, array of ids, and date to workout_session table
+        // exercise_sets order (reps, sets, rir)
+        
     };
 
     return (
