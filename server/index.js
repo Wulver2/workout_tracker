@@ -72,7 +72,7 @@ app.post("/workout", async(req, res) => {
 app.get("/workout", async(req, res) => {
     try {
         const workouts = await pool.query("SELECT * FROM workout_session");
-        res.json(worlouts.allrows);
+        res.json(workouts.allrows);
     } catch (err) {
         console.error(err.message);
     }
