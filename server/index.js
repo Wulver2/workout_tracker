@@ -95,13 +95,13 @@ app.put("/workout/:id", async(req, res) =>{
 app.post("/exercise_sets", async(req, res) => {
     try {
         // exercise id, reps, sets, rir
-        const {exercise_id, reps, sets, rir} = req.body
+        const {exercise_id, reps, sets, rir} = req.body;
         const newExercisePerformed = pool.query(
             `INSERT INTO exercise_sets (exercise_id, reps, sets_performed, rir)
              VALUES ${exercise_id}, ${reps}, ${sets}, ${rir}`);
                 
-    } catch (error) {
-        
+    } catch (err) {
+        console.error(err.message);
     }
 });
 // Get

@@ -52,13 +52,14 @@ const CreateWorkout = () => {
         const update = [...sessionExercises];
         update[index][field] = value;
         setSessionExercises(update);
+        console.log(sessionExercises[index]);
     }
 
     const handleSubmit = () => {
         // on submit sends query to exercise_set table? for ids, then
         // inserts name, array of ids, and date to workout_session table
         // exercise_sets order (reps, sets, rir)
-        
+
     };
 
     return (
@@ -78,7 +79,7 @@ const CreateWorkout = () => {
                 {sessionExercises.map((fields, index) => (
                     <div key={index}>
                     {/* exercise dropdown */}
-                    <select name="" id="">
+                    <select onChange={(e) => updateExercise(index, "exercise_id", e.target.value)}>
                     {availableExercises.map(ex => (
                         <option value={ex.exercise_id} key={ex.exercise_id}>{ex.name}</option>
                     ))}
