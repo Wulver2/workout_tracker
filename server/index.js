@@ -65,6 +65,14 @@ app.post("/workout", async(req, res) => {
             VALUES (${name}, ${date}) RETURNING session_id`);
 
         const session_id = res.json(newSession.rows[0]);
+
+        // exercise_sets
+        for (var i = 0; i < exercises.length; i++) {
+            await pool.query(`
+                INSERT INTO exercise_sets (exercise_id, reps, sets, rir, session)
+                VALUES (${exercises[i]["exercise_id"]}, ${exercises[i]["reps"]},
+                ${exercises[i]["sets_performed"]}, ${exercises[i]["rir"]}, ${session_id})`);
+        }
     } catch (err) {
         console.error(err.message);
     }

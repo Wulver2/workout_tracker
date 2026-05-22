@@ -58,7 +58,7 @@ const CreateWorkout = () => {
     const handleSubmit = async(e) => {
         // on submit sends query to exercise_set table? for ids, then
         // inserts name, array of ids, and date to workout_session table
-        // exercise_sets order (reps, sets, rir)
+        // exercise_sets order (exercise_id, reps, sets, rir)
         // may go back to change set up of workout_session and exercise_set tables
         // to make joins easier? ex. exercise_set table will get another colomn
         // with workout_session_id as a foreign key
