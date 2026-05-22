@@ -25,6 +25,8 @@ CREATE TABLE workout_session(
 );
 
 ALTER TABLE workout_session ADD name TEXT;
+ALTER TABLE workout_session DROP COLUMN exercise_data;
+
 
 CREATE TABLE exercise_sets (
     exercise_sets_id SERIAL PRIMARY KEY,
@@ -38,4 +40,5 @@ CREATE TABLE exercise_sets (
     -- rate of perceived exertion(RPE) optional, notes optional
     
 );
+ALTER TABLE exercise_sets ADD session_id INT REFERENCES workout_session(session_id);
 
