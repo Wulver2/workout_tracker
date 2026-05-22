@@ -53,21 +53,23 @@ app.get("/exercises/:equipment", async(req, res) => {
 // (Should old workouts be able to be deleted by users?)
 
 
-// ROUTES for workout_session
+// ROUTES for workout_session and exercise_sets
 // Create
 app.post("/workout", async(req, res) => {
     try {
-        const {name, exercise_ids, date} = req.body;
+        const {name, date, exercises} = req.body;
+        // need to return session id so i can use them for a
+        // column in exercise_sets
         const newSession = await pool.query(
-            `INSERT INTO workout_session (name, exercise_data, day_of_session)
-            VALUES (${name}, ${exercise_ids}, ${date}) RETURNING *`);
+            `INSERT INTO workout_session (name, day_of_session)
+            VALUES (${name}, ${date}) RETURNING session_id`);
 
-            // To see new session
-            res.json(newSession.rows[0]);
+        const session_id = res.json(newSession.rows[0]);
     } catch (err) {
         console.error(err.message);
     }
 });
+
 // Get
 app.get("/workout", async(req, res) => {
     try {
@@ -89,7 +91,7 @@ app.put("/workout/:id", async(req, res) =>{
     }
 });
 // Delete
-
+/*
 // ROUTES for exercise_sets
 // Create
 app.post("/exercise_sets", async(req, res) => {
@@ -114,7 +116,7 @@ app.get("/exercise_sets", async(req, res) => {
 });
 // Edit
 // Delete
-
+*/
 app.listen(8080, () => {
     console.log("server 8080 is on");
 });
