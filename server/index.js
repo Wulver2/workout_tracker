@@ -57,21 +57,29 @@ app.get("/exercises/:equipment", async(req, res) => {
 // Create
 app.post("/workout", async(req, res) => {
     try {
-        const {name, date, exercises} = req.body;
+        const {name, date, sessionExercises} = req.body;
         // need to return session id so i can use them for a
         // column in exercise_sets
         const newSession = await pool.query(
             `INSERT INTO workout_session (name, day_of_session)
-            VALUES (${name}, ${date}) RETURNING session_id`);
+            VALUES ('${name}', '${date}') RETURNING session_id`);
 
-        const session_id = res.json(newSession.rows[0]);
+        const session_id = newSession.rows[0].session_id;
 
         // exercise_sets
-        for (var i = 0; i < exercises.length; i++) {
+        for (var i = 0; i < sessionExercises.length; i++) {
+            const exercise = sessionExercises[i]
+        
             await pool.query(`
-                INSERT INTO exercise_sets (exercise_id, reps, sets, rir, session)
-                VALUES (${exercises[i]["exercise_id"]}, ${exercises[i]["reps"]},
-                ${exercises[i]["sets_performed"]}, ${exercises[i]["rir"]}, ${session_id})`);
+                INSERT INTO exercise_sets (exercise_id, reps, sets_performed, rir, session_id)
+                VALUES ($1, $2, $3, $4, $5)`,
+            [ 
+                exercise.exercise_id,
+                exercise.reps,
+                exercise.sets_performed,
+                exercise.rir,
+                session_id
+            ]);
         }
     } catch (err) {
         console.error(err.message);

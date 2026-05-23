@@ -6,6 +6,7 @@ const CreateWorkout = () => {
     const [availableExercises, setAvailableExercises] = useState([]);
 
     const currentDate = new Date();
+    // TODO: change this
     const defaultDate = (currentDate.getMonth + 1) + "-" +
                         currentDate.getDate + "-" + currentDate.getFullYear;
 
@@ -37,7 +38,6 @@ const CreateWorkout = () => {
 
     const updateDate = (value) => {
         setDate(value);
-        console.log(value);
     };
 
     const addExercise = () => {
@@ -63,6 +63,18 @@ const CreateWorkout = () => {
         // to make joins easier? ex. exercise_set table will get another colomn
         // with workout_session_id as a foreign key
         e.preventDefault()
+        try {
+            const body = { name, date, sessionExercises };
+            const response = fetch("http://localhost:8080/workout", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            })
+
+            console.log(response);
+        } catch (err) {
+            console.error(err.message);
+        }
 
 
     };
