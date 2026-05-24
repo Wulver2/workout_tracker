@@ -42,17 +42,20 @@ const CreateWorkout = () => {
 
     const addExercise = () => {
         setSessionExercises([...sessionExercises, { exercise_id: '', sets_performed: '', reps: '', rir: '' }]);
-        console.log(sessionExercises);
     };
-    const removeExercise = () => {
-
+    const removeExercise = (index) => {
+        const element = sessionExercises[index]
+        if (index > 0) {
+            setSessionExercises(sessionExercises.filter(ex =>
+                ex !== element
+            ))
+        }
     };
 
     const updateExercise = (index, field, value) => {
         const update = [...sessionExercises];
         update[index][field] = value;
         setSessionExercises(update);
-        console.log(sessionExercises[index]);
     }
 
     const handleSubmit = async(e) => {
@@ -95,28 +98,32 @@ const CreateWorkout = () => {
 
                 {sessionExercises.map((fields, index) => (
                     <div key={index}>
-                    {/* exercise dropdown */}
-                    <select onChange={(e) => updateExercise(index, "exercise_id", e.target.value)}>
-                    {availableExercises.map(ex => (
-                        <option value={ex.exercise_id} key={ex.exercise_id}>{ex.name}</option>
-                    ))}
-                    </select>
+                        {/* exercise dropdown */}
+                        <select onChange={(e) => updateExercise(index, "exercise_id", e.target.value)}>
+                        {availableExercises.map(ex => (
+                            <option value={ex.exercise_id} key={ex.exercise_id}>{ex.name}</option>
+                        ))}
+                        </select>
 
-                    {/* sets */}
-                    <input type="number" placeholder="Sets" onChange=
-                    {(e) => updateExercise(index,"sets_performed", e.target.value)} min={1} required/>
-                    {/* reps */}
-                    <input type="number" placeholder="Reps" onChange=
-                    {(e) => updateExercise(index, "reps", e.target.value)} min={1} required/>
-                    {/* rir */}
-                    <input type="number" placeholder="RIR" onChange=
-                    {(e) => updateExercise(index, "rir", e.target.value)} min={0}/>
+                        {/* sets */}
+                        <input type="number" placeholder="Sets" onChange=
+                        {(e) => updateExercise(index,"sets_performed", e.target.value)} min={1} required/>
+                        {/* reps */}
+                        <input type="number" placeholder="Reps" onChange=
+                        {(e) => updateExercise(index, "reps", e.target.value)} min={1} required/>
+                        {/* rir */}
+                        <input type="number" placeholder="RIR" onChange=
+                        {(e) => updateExercise(index, "rir", e.target.value)} min={0}/>
+
+                        {/* remove exercise */}
+                        <button type="button" onClick={(e) => removeExercise(index)}> Remove Exercise</button>
+
                     </div>
+
                 ))}
                 {/* add exercise */}
                 <button type="button" onClick={addExercise}>+ Add Exercise</button>
-                {/* remove exercise */}
-                <button type="button"> Remove Exercise</button>
+
                 <button type="submit">Submit</button>
             </form>
         </Fragment>
