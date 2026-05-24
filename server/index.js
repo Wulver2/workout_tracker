@@ -106,33 +106,7 @@ app.put("/workout/:id", async(req, res) =>{
         console.error(err.message);
     }
 });
-// Delete
-/*
-// ROUTES for exercise_sets
-// Create
-app.post("/exercise_sets", async(req, res) => {
-    try {
-        // exercise id, reps, sets, rir
-        const {exercise_id, reps, sets, rir} = req.body;
-        const newExercisePerformed = pool.query(
-            `INSERT INTO exercise_sets (exercise_id, reps, sets_performed, rir)
-             VALUES ${exercise_id}, ${reps}, ${sets}, ${rir}`);
-                
-    } catch (err) {
-        console.error(err.message);
-    }
-});
-// Get
-app.get("/exercise_sets", async(req, res) => {
-    try {
-        await pool.query('SELECT * FROM exercise_sets');
-    } catch (err) {
-        console.error(err.message);
-    }
-});
-// Edit
-// Delete
-*/
+
 app.listen(8080, () => {
     console.log("server 8080 is on");
 });
