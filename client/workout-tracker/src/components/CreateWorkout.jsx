@@ -62,13 +62,10 @@ const CreateWorkout = () => {
         // on submit sends query to exercise_set table? for ids, then
         // inserts name, array of ids, and date to workout_session table
         // exercise_sets order (exercise_id, reps, sets, rir)
-        // may go back to change set up of workout_session and exercise_set tables
-        // to make joins easier? ex. exercise_set table will get another colomn
-        // with workout_session_id as a foreign key
         e.preventDefault()
         try {
             const body = { name, date, sessionExercises };
-            const response = fetch("http://localhost:8080/workout", {
+            const response = fetch("http://localhost:8080/workouts", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
@@ -100,9 +97,10 @@ const CreateWorkout = () => {
                     <div key={index}>
                         {/* exercise dropdown */}
                         <select onChange={(e) => updateExercise(index, "exercise_id", e.target.value)}>
-                        {availableExercises.map(ex => (
-                            <option value={ex.exercise_id} key={ex.exercise_id}>{ex.name}</option>
-                        ))}
+                            <option value="">Select an Exercise</option>
+                            {availableExercises.map(ex => (
+                                <option value={ex.exercise_id} key={ex.exercise_id}>{ex.name}</option>
+                            ))}
                         </select>
 
                         {/* sets */}
