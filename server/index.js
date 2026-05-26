@@ -90,7 +90,7 @@ app.post("/workouts", async(req, res) => {
 app.get("/workouts", async(req, res) => {
     try {
         const workouts = await pool.query(`
-            SELECT wo.session_id, wo.name, wo.day_of_session, e.name AS exercise_name, es.reps, es.sets_performed, es.rir
+            SELECT wo.session_id, wo.name, wo.day_of_session AS date, e.name AS exercise_name, es.reps, es.sets_performed, es.rir
             FROM workout_session AS wo
             JOIN exercise_sets as es ON wo.session_id = es.session_id
             JOIN exercises as e ON es.exercise_id = e.exercise_id;`);
