@@ -102,7 +102,8 @@ app.get("/workouts", async(req, res) => {
             FROM workout_session AS wo
             JOIN exercise_sets as es ON wo.session_id = es.session_id
             JOIN exercises as e ON es.exercise_id = e.exercise_id
-            GROUP BY wo.session_id;`); 
+            GROUP BY wo.session_id
+            ORDER BY session_id DESC;`); 
         res.json(workouts.rows);
 
     } catch (err) {

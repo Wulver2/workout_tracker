@@ -41,7 +41,11 @@ const ListWorkouts = () => {
                         <tr key={index}>
                             <td>{workouts[index]["name"]}</td>
                             <td>{workouts[index]["date"]}</td>
-                            <td>hello</td>
+                            <td>
+                                {workouts[index]["exercises"].map((ex, i) => (
+                                    <div key={i}>{ex["exercise_name"]}</div>
+                                ))}
+                            </td>
                             <td><button>edit</button></td>
                             <td><button>delete</button></td>
                         </tr>
