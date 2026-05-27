@@ -14,16 +14,10 @@ const ListWorkouts = () => {
             console.error(err.message);
         }
     };
-    
+
     useEffect(() => {
         getWorkouts();
     }, [])
-
-    const updateSession = (s_id) => {
-        if (s_id != currSession) {
-            setSession(s_id);
-        }
-    }
 
     return (
         <Fragment>
@@ -35,6 +29,8 @@ const ListWorkouts = () => {
                         <th>workout name</th>
                         <th>date</th>
                         <th>exercise info</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
 
@@ -42,9 +38,12 @@ const ListWorkouts = () => {
                     {/* figure out how to combine exercises with workouts
                      with same session_id */}
                     {workouts.map((fields, index) => (
-                        <tr>
+                        <tr key={index}>
                             <td>{workouts[index]["name"]}</td>
                             <td>{workouts[index]["date"]}</td>
+                            <td>hello</td>
+                            <td><button>edit</button></td>
+                            <td><button>delete</button></td>
                         </tr>
                     ))}
                 </tbody>

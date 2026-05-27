@@ -37,7 +37,9 @@ app.get("/exercises/:muscle", async(req, res) => {
 app.get("/exercises/:equipment", async(req, res) => {
     try {
         const { equipment } = req.params;
-        const matchExercise = await pool.query(`SELECT * FROM exercises WHERE equipment = '${equipment}'`);
+        const matchExercise = await pool.query(`
+            SELECT * FROM exercises WHERE equipment = '$1'`, [equipment]);
+
         res.json(matchExercise.rows);
     } catch (err) {
         console.error(err.message);
@@ -89,11 +91,18 @@ app.post("/workouts", async(req, res) => {
 // Get
 app.get("/workouts", async(req, res) => {
     try {
-        const workouts = await pool.query(`
-            SELECT wo.session_id, wo.name, wo.day_of_session AS date, e.name AS exercise_name, es.reps, es.sets_performed, es.rir
+       const workouts = await pool.query(`
+            SELECT wo.session_id, wo.name, wo.day_of_session AS date,
+            json_agg(json_build_object(
+                'exercise_name', e.name,
+                'reps', es.reps,
+                'sets', es.sets_performed,
+                'rir', es.rir
+            )) AS exercises
             FROM workout_session AS wo
             JOIN exercise_sets as es ON wo.session_id = es.session_id
-            JOIN exercises as e ON es.exercise_id = e.exercise_id;`);
+            JOIN exercises as e ON es.exercise_id = e.exercise_id
+            GROUP BY wo.session_id;`); 
         res.json(workouts.rows);
 
     } catch (err) {
