@@ -1,8 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 
 const ListWorkouts = () => {
-    const [workouts, setWorkouts] = useState([]); 
-    const [currSession, setSession] = useState(-1);
+    const [workouts, setWorkouts] = useState([]);
 
     const getWorkouts = async() => {
         try {
@@ -43,7 +42,10 @@ const ListWorkouts = () => {
                             <td>{workouts[index]["date"]}</td>
                             <td>
                                 {workouts[index]["exercises"].map((ex, i) => (
-                                    <div key={i}>{ex["exercise_name"]}</div>
+                                    <div key={i}>
+                                        {ex["exercise_name"]}:  {ex["reps"]} {ex["sets"]}
+                                         at {ex["rir"]} RIR
+                                    </div>
                                 ))}
                             </td>
                             <td><button>edit</button></td>
