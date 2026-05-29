@@ -112,15 +112,32 @@ app.get("/workouts", async(req, res) => {
 });
 
 // Edit
-app.put("/workout/:id", async(req, res) =>{
+app.put("/workout/:id", async(req, res) => {
     // need to get req body
     // should sessions be editable or should only the exercises within be?
     try {
-        await pool.query(`UPDATE workout_session SET     WHERE session_id = ${id}`)
+        const update = await pool.query(`UPDATE workout_session SET     WHERE session_id = ${id}`)
     } catch (err) {
         console.error(err.message);
     }
 });
+
+
+app.delete("/workout/:id", async(req, res) => {
+    try {
+        const { id } = req.body()
+        const deleteWorkout = await pool.query(`
+            DELETE FROM exercise_sets
+            WHERE session_id = $1;
+            DELETE FROM workout_session
+            WHERE session_id = $1;
+            `, [id]);
+        
+        res.json(deleteWorkout);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
 
 app.listen(8080, () => {
     console.log("server 8080 is on");
