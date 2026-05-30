@@ -14,6 +14,19 @@ const ListWorkouts = () => {
         }
     };
 
+    const deleteWorkout = async (id) => {
+        try {
+            const deleteWorkout = await fetch(`http://localhost:8080/workout/${id}`, {
+                method: "DELETE"
+            });
+
+            setWorkouts(workouts.filter(workout => workout.session_id !== id));
+            console.log(deleteWorkout);
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+
     useEffect(() => {
         getWorkouts();
     }, [])
@@ -37,7 +50,7 @@ const ListWorkouts = () => {
                     {/* figure out how to combine exercises with workouts
                      with same session_id */}
                     {workouts.map((fields, index) => (
-                        <tr key={index}>
+                        <tr key={workouts[index]["session_id"]}>
                             <td>{workouts[index]["name"]}</td>
                             <td>{workouts[index]["date"]}</td>
                             <td>
@@ -49,7 +62,11 @@ const ListWorkouts = () => {
                                 ))}
                             </td>
                             <td><button>edit</button></td>
-                            <td><button>delete</button></td>
+                            {/*ToDo add a warning that this is permenant*/}
+                            <td>
+                                <button onClick={() => deleteWorkout(workouts[index]["session_id"])}>
+                                delete
+                                </button></td>
                         </tr>
                     ))}
                 </tbody>
