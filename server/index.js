@@ -126,14 +126,15 @@ app.put("/workout/:id", async(req, res) => {
 app.delete("/workout/:id", async(req, res) => {
     try {
         const { id } = req.params
-        const deleteWorkout = await pool.query(`
+        const deleteExerciseData = await pool.query(`
             DELETE FROM exercise_sets
             WHERE session_id = $1;
+            `, [id]);
+        const deleteWorkout = await pool.query(`
             DELETE FROM workout_session
             WHERE session_id = $1;
             `, [id]);
-        
-        res.json(deleteWorkout);
+        res.json(deleteExerciseData + deleteWorkout);
     } catch (err) {
         console.error(err.message);
     }
