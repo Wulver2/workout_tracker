@@ -25,11 +25,18 @@ const ListWorkouts = () => {
         } catch (err) {
             console.error(err.message);
         }
-    }
+    };
 
     useEffect(() => {
         getWorkouts();
-    }, [])
+    }, []);
+
+    const dateFormat = (date) => {
+        const created = new Date(date);
+        const createdDate = created.toLocaleDateString('en-US');
+
+        return createdDate
+    };
 
     return (
         <Fragment>
@@ -52,7 +59,7 @@ const ListWorkouts = () => {
                     {workouts.map((fields, index) => (
                         <tr key={workouts[index]["session_id"]}>
                             <td>{workouts[index]["name"]}</td>
-                            <td>{workouts[index]["date"]}</td>
+                            <td>{dateFormat(workouts[index]["date"])}</td>
                             <td>
                                 {workouts[index]["exercises"].map((ex, i) => (
                                     <div key={i}>
