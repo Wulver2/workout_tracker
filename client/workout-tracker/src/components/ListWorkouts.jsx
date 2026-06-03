@@ -42,7 +42,7 @@ const ListWorkouts = () => {
         <Fragment>
             <h1>Current Workouts</h1>
             {/*some ro*/}
-            <table>
+            <table id="current_workouts">
                 <thead>
                     <tr>
                         <th>workout name</th>
@@ -68,9 +68,9 @@ const ListWorkouts = () => {
                                     </div>
                                 ))}
                             </td>
-                            <td><button>edit</button></td>
-                            {/*ToDo add a warning that this is permenant*/}
                             <td>
+                                <button>edit</button>
+                                {/*ToDo add a warning that this is permenant*/}
                                 <button onClick={() => deleteWorkout(workouts[index]["session_id"])}>
                                 delete
                                 </button></td>

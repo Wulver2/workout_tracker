@@ -21,8 +21,13 @@
   gap: 10px;
 }
 
-.form_item{
-  align-self: center;
+table {
+  width: 100%;
+
+}
+
+td button {
+  margin: 2px;
 }
 
 
