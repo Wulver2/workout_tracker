@@ -12,3 +12,19 @@
 #header a:hover {
   color: rgb(218, 193, 91);
 }
+
+#create_workout {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.form_item{
+  align-self: center;
+}
+
+
+
+
