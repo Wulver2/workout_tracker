@@ -29,7 +29,18 @@ table {
 td button {
   margin: 2px;
 }
-
+#current_workouts {
+  border-collapse: collapse;
+  border-style: none;
+  color: white;
+}
+#current_workouts tr.workouts {
+  border-radius: 80px;
+  border-style: solid;
+  border-color: rgb(236, 229, 193);
+  background-color: rgb(23, 37, 48);
+  margin: 10px;
+}
 
 
 
