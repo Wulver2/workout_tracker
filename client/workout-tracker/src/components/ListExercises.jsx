@@ -44,6 +44,11 @@ const ListExercises = () => {
                     <option value="Glutes">Glutes</option>
                     <option value="Calves">Calves</option>
                 </select>
+                <select name="" id="">
+                    <option value="">Equipment Required?</option>
+                    <option value="n/a">No</option>
+                    <option value="">Yes</option>
+                </select>
             </form>
         <table>
             <thead>
