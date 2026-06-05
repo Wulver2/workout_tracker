@@ -41,7 +41,6 @@ const ListWorkouts = () => {
     return (
         <Fragment>
             <h1>Current Workouts</h1>
-            {/*some ro*/}
             <table id="current_workouts">
                 <thead>
                     <tr>

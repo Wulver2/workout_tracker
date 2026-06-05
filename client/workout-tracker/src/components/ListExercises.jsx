@@ -20,6 +20,22 @@ const ListExercises = () => {
     return (
     <Fragment>
         <h1>Exercises</h1>
+            <form>
+                <select oname="" id="">
+                    <option value="">Choose muscle group</option>
+                    <option value="Lats">Lats</option>
+                    <option value="Upper Back">Upper Back</option>
+                    <option value="Biceps">Biceps</option>
+                    <option value="Triceps">Triceps</option>
+                    <option value="Chest">Chest</option>
+                    <option value="Shoulders">Shoulders</option>
+                    <option value="Abdominal">Abs</option>
+                    <option value="Quads">Quads</option>
+                    <option value="Hamstrings">Hamstrings</option>
+                    <option value="Glutes">Glutes</option>
+                    <option value="Calves">Calves</option>
+                </select>
+            </form>
         <table>
             <thead>
                 <tr>
