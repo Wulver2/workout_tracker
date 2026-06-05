@@ -3,25 +3,34 @@ import React, { Fragment, useEffect, useState } from "react";
 const ListExercises = () => {
     const [exercises, setExercises] = useState([]);
 
-    const getExercises = async() => {
+    const getExercises = async(filter) => {
         try {
-            const response = await fetch("http://localhost:8080/exercises");
-            const jsonData = await response.json();
+            if (filter != "") {
+                const response = await fetch(`http://localhost:8080/exercises/${filter}`);
+                const jsonData = await response.json();
 
-            setExercises(jsonData)
+                setExercises(jsonData)
+            }
+            else {
+                const response = await fetch(`http://localhost:8080/exercises`);
+                const jsonData = await response.json();
+
+                setExercises(jsonData)
+            }
+
         } catch (err) {
             console.error(err.message);
         }
     }
     useEffect(() => {
-        getExercises();
+        getExercises("");
     }, []);
 
     return (
     <Fragment>
         <h1>Exercises</h1>
             <form>
-                <select oname="" id="">
+                <select onChange={(e) => getExercises(e.target.value)} id="">
                     <option value="">Choose muscle group</option>
                     <option value="Lats">Lats</option>
                     <option value="Upper Back">Upper Back</option>
@@ -39,7 +48,7 @@ const ListExercises = () => {
         <table>
             <thead>
                 <tr>
-                    <th>Name of exercise</th>
+                    <th>Name</th>
                     <th>Muscles targeted</th>
                     <th>Equipment needed</th>
                 </tr>
