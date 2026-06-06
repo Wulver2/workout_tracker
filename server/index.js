@@ -22,30 +22,27 @@ app.get("/exercises", async(req, res) => {
 });
 
 // Get exercise based on muscle targeted
-app.get("/exercises/:muscle", async(req, res) => {
+app.get("/exercises/:muscle/:equipment", async(req, res) => {
     try {
-        const { muscle } = req.params;
-        const matchExercise = await pool.query(`SELECT * FROM exercises WHERE '${muscle}' = ANY (muscle_groups)`);
-        res.json(matchExercise.rows);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).json({ error: "Server error" });
-    }
-});
-
-// Get exercise based on if equipment is needed
-app.get("/exercises/:equipment", async(req, res) => {
-    try {
-        const { equipment } = req.params;
+        const { muscle, equipment } = req.params;
         const matchExercise = await pool.query(`
-            SELECT * FROM exercises WHERE equipment = '$1'`, [equipment]);
-
+            SELECT * FROM exercises WHERE $1 = ANY (muscle_groups)
+            AND equipment = $2`, 
+        [
+            muscle,
+            equipment
+        ]);
         res.json(matchExercise.rows);
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ error: "Server error" });
     }
 });
+
+// Get exercise based on both equipment needed and muscle group
+
+// Get exercies based on name FOR SEARCH as they type it
+
 
 // ROUTES for prev_workout
 // Create (not really creating new one, just 

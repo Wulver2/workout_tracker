@@ -2,11 +2,13 @@ import React, { Fragment, useEffect, useState } from "react";
 
 const ListExercises = () => {
     const [exercises, setExercises] = useState([]);
+    const [muscle, setMuscle] = useState("");
+    const [equipment, setEquipment] = useState("");
 
-    const getExercises = async(filter) => {
+    const getExercises = async() => {
         try {
-            if (filter != "") {
-                const response = await fetch(`http://localhost:8080/exercises/${filter}`);
+            if (muscle != "" || equipment != "") {
+                const response = await fetch(`http://localhost:8080/exercises/${muscle}/${equipment}`);
                 const jsonData = await response.json();
 
                 setExercises(jsonData)
@@ -23,14 +25,14 @@ const ListExercises = () => {
         }
     }
     useEffect(() => {
-        getExercises("");
+        getExercises();
     }, []);
 
     return (
     <Fragment>
         <h1>Exercises</h1>
             <form>
-                <select onChange={(e) => getExercises(e.target.value)} id="">
+                <select onChange={(e) => {setMuscle(e.target.value); getExercises()}} id="">
                     <option value="">Choose muscle group</option>
                     <option value="Lats">Lats</option>
                     <option value="Upper Back">Upper Back</option>
@@ -44,10 +46,10 @@ const ListExercises = () => {
                     <option value="Glutes">Glutes</option>
                     <option value="Calves">Calves</option>
                 </select>
-                <select name="" id="">
-                    <option value="">Equipment Required?</option>
-                    <option value="n/a">No</option>
-                    <option value="">Yes</option>
+                <select onChange={(e) => {setEquipment(e.target.value); getExercises()}} id="">
+                    <option value="equipment">Equipment Required?</option>
+                    <option value="none">No</option>
+                    <option value="yes">Yes</option>
                 </select>
             </form>
         <table>
