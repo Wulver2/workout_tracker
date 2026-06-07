@@ -12,7 +12,7 @@ const CreateWorkout = () => {
 
     const [name, setName] = useState("workout");
     const [sessionExercises, setSessionExercises] = useState([
-        { exercise_id: '', sets_performed: '', reps: '', rir: '' }
+        { exercise_id: '', sets_performed: '', reps: '', rir: '', weight: 0}
     ]);
     const [date, setDate] = useState(defaultDate);
 
@@ -106,7 +106,10 @@ const CreateWorkout = () => {
                                     <option value={ex.exercise_id} key={ex.exercise_id}>{ex.name}</option>
                                 ))}
                             </select>
-
+                            {/* weight */}
+                            <input type="number" placeholder="Top weight" 
+                            onChange={(e) => updateExercise(index, "weight", e.target.value)}
+                            min={0} step={0.1}/>
                             {/* sets */}
                             <input type="number" placeholder="Sets" onChange=
                                 {(e) => updateExercise(index, "sets_performed", e.target.value)} min={1} required />

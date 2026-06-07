@@ -71,13 +71,13 @@ app.post("/workouts", async(req, res) => {
         
             await pool.query(`
                 INSERT INTO exercise_sets (exercise_id, reps, sets_performed, rir, top_weight, session_id)
-                VALUES ($1, $2, $3, $4, $5)`,
+                VALUES ($1, $2, $3, $4, $5, $6)`,
             [ 
                 exercise.exercise_id,
                 exercise.reps,
                 exercise.sets_performed,
                 exercise.rir,
-                exercise.top_weight,
+                exercise.weight,
                 session_id
             ]);
         }
