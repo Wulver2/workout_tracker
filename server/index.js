@@ -70,13 +70,14 @@ app.post("/workouts", async(req, res) => {
             const exercise = sessionExercises[i]
         
             await pool.query(`
-                INSERT INTO exercise_sets (exercise_id, reps, sets_performed, rir, session_id)
+                INSERT INTO exercise_sets (exercise_id, reps, sets_performed, rir, top_weight, session_id)
                 VALUES ($1, $2, $3, $4, $5)`,
             [ 
                 exercise.exercise_id,
                 exercise.reps,
                 exercise.sets_performed,
                 exercise.rir,
+                exercise.top_weight,
                 session_id
             ]);
         }
@@ -95,6 +96,7 @@ app.get("/workouts", async(req, res) => {
                 'reps', es.reps,
                 'sets', es.sets_performed,
                 'rir', es.rir
+                'weight', es.top_weight
             )) AS exercises
             FROM workout_session AS wo
             JOIN exercise_sets as es ON wo.session_id = es.session_id
