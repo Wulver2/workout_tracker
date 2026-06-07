@@ -95,7 +95,7 @@ app.get("/workouts", async(req, res) => {
                 'exercise_name', e.name,
                 'reps', es.reps,
                 'sets', es.sets_performed,
-                'rir', es.rir
+                'rir', es.rir,
                 'weight', es.top_weight
             )) AS exercises
             FROM workout_session AS wo

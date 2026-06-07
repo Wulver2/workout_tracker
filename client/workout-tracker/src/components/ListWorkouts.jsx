@@ -62,7 +62,7 @@ const ListWorkouts = () => {
                             <td>
                                 {workouts[index]["exercises"].map((ex, i) => (
                                     <div key={i}>
-                                        {ex["exercise_name"]}:  {ex["reps"]} {ex["sets"]}
+                                        {ex["exercise_name"]}: {ex["weight"]}  {ex["reps"]} {ex["sets"]}
                                          at {ex["rir"]} RIR
                                     </div>
                                 ))}
