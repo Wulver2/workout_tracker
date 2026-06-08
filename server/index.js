@@ -21,7 +21,7 @@ app.get("/exercises", async(req, res) => {
     }
 });
 
-// Get exercise based on muscle targeted
+// Get exercise based on both equipment needed and muscle group
 app.get("/exercises/:muscle/:equipment", async(req, res) => {
     try {
         const { muscle, equipment } = req.params;
@@ -32,6 +32,7 @@ app.get("/exercises/:muscle/:equipment", async(req, res) => {
             muscle,
             equipment
         ]);
+
         res.json(matchExercise.rows);
     } catch (err) {
         console.error(err.message);
@@ -39,9 +40,19 @@ app.get("/exercises/:muscle/:equipment", async(req, res) => {
     }
 });
 
-// Get exercise based on both equipment needed and muscle group
-
 // Get exercies based on name FOR SEARCH as they type it
+app.get("/exercises/:search", async(req, res) => {
+    try {
+        const { search } = req.params;
+        const matchExercise = await pool.query(`
+            SELECT * FROM exercises
+            WHERE name LIKE $1`, [ ('%' + search + '%')]);
+        console.log(req.params)
+        res.json(matchExercise.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
 
 
 // ROUTES for prev_workout
