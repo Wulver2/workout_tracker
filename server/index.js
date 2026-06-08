@@ -47,7 +47,7 @@ app.get("/exercises/:search", async(req, res) => {
         const matchExercise = await pool.query(`
             SELECT * FROM exercises
             WHERE name LIKE $1`, [ ('%' + search + '%')]);
-        console.log(req.params)
+
         res.json(matchExercise.rows);
     } catch (err) {
         console.error(err.message);
