@@ -10,7 +10,7 @@ app.use(express.json());
 // EXERCISE ROUTES
 // Get all exercises
 
-app.get("/exercises", async(req, res) => {
+app.get("/exercises", async (req, res) => {
     try {
         const allExercises = await pool.query("SELECT * FROM exercises");
         res.json(allExercises.rows);
@@ -22,16 +22,27 @@ app.get("/exercises", async(req, res) => {
 });
 
 // Get exercise based on both equipment needed and muscle group
-app.get("/exercises/:muscle/:equipment", async(req, res) => {
+app.get("/exercises/{:muscle}&{:equipment}", async (req, res) => {
     try {
         const { muscle, equipment } = req.params;
-        const matchExercise = await pool.query(`
+        console.log(equipment)
+        if (equipment == undefined) {
+            var matchExercise = await pool.query(`
+                SELECT * FROM exercises WHERE $1 = ANY (muscle_groups)`, [muscle])
+        }
+        else if(muscle == undefined) {
+            var matchExercise = await pool.query(`
+                SELECT * FROM exercises Where equipment = $1`, [equipment])
+        }
+        else {
+            var matchExercise = await pool.query(`
             SELECT * FROM exercises WHERE $1 = ANY (muscle_groups)
-            AND equipment = $2`, 
-        [
-            muscle,
-            equipment
-        ]);
+            AND equipment = $2`,
+                [
+                    muscle,
+                    equipment
+                ]);
+        }
 
         res.json(matchExercise.rows);
     } catch (err) {
@@ -41,12 +52,12 @@ app.get("/exercises/:muscle/:equipment", async(req, res) => {
 });
 
 // Get exercies based on name FOR SEARCH as they type it
-app.get("/exercises/:search", async(req, res) => {
+app.get("/exercises/:search", async (req, res) => {
     try {
         const { search } = req.params;
         const matchExercise = await pool.query(`
             SELECT * FROM exercises
-            WHERE name LIKE $1`, [ ('%' + search + '%')]);
+            WHERE name LIKE $1`, [('%' + search + '%')]);
 
         res.json(matchExercise.rows);
     } catch (err) {
@@ -65,9 +76,9 @@ app.get("/exercises/:search", async(req, res) => {
 
 // ROUTES for workout_session and exercise_sets
 // Create
-app.post("/workouts", async(req, res) => {
+app.post("/workouts", async (req, res) => {
     try {
-        const {name, date, sessionExercises} = req.body;
+        const { name, date, sessionExercises } = req.body;
         // need to return session id so i can use them for a
         // column in exercise_sets
         const newSession = await pool.query(
@@ -79,18 +90,18 @@ app.post("/workouts", async(req, res) => {
         // exercise_sets
         for (var i = 0; i < sessionExercises.length; i++) {
             const exercise = sessionExercises[i]
-        
+
             await pool.query(`
                 INSERT INTO exercise_sets (exercise_id, reps, sets_performed, rir, top_weight, session_id)
                 VALUES ($1, $2, $3, $4, $5, $6)`,
-            [ 
-                exercise.exercise_id,
-                exercise.reps,
-                exercise.sets_performed,
-                exercise.rir,
-                exercise.weight,
-                session_id
-            ]);
+                [
+                    exercise.exercise_id,
+                    exercise.reps,
+                    exercise.sets_performed,
+                    exercise.rir,
+                    exercise.weight,
+                    session_id
+                ]);
         }
     } catch (err) {
         console.error(err.message);
@@ -98,9 +109,9 @@ app.post("/workouts", async(req, res) => {
 });
 
 // Get
-app.get("/workouts", async(req, res) => {
+app.get("/workouts", async (req, res) => {
     try {
-       const workouts = await pool.query(`
+        const workouts = await pool.query(`
             SELECT wo.session_id, wo.name, wo.day_of_session AS date,
             json_agg(json_build_object(
                 'exercise_name', e.name,
@@ -113,7 +124,7 @@ app.get("/workouts", async(req, res) => {
             JOIN exercise_sets as es ON wo.session_id = es.session_id
             JOIN exercises as e ON es.exercise_id = e.exercise_id
             GROUP BY wo.session_id
-            ORDER BY session_id DESC;`); 
+            ORDER BY session_id DESC;`);
         res.json(workouts.rows);
 
     } catch (err) {
@@ -122,7 +133,7 @@ app.get("/workouts", async(req, res) => {
 });
 
 // Edit
-app.put("/workout/:id", async(req, res) => {
+app.put("/workout/:id", async (req, res) => {
     // need to get req body
     // should sessions be editable or should only the exercises within be?
     try {
@@ -133,7 +144,7 @@ app.put("/workout/:id", async(req, res) => {
 });
 
 
-app.delete("/workout/:id", async(req, res) => {
+app.delete("/workout/:id", async (req, res) => {
     try {
         const { id } = req.params
         const deleteExerciseData = await pool.query(`

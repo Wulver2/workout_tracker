@@ -8,7 +8,7 @@ const ListExercises = () => {
     const getExercises = async () => {
         try {
             if (muscle != "" || equipment != "") {
-                const response = await fetch(`http://localhost:8080/exercises/${muscle}/${equipment}`);
+                const response = await fetch(`http://localhost:8080/exercises/${muscle}&${equipment}`);
                 const jsonData = await response.json();
 
                 setExercises(jsonData)
@@ -63,7 +63,7 @@ const ListExercises = () => {
                     <option value="Calves">Calves</option>
                 </select>
                 <select onChange={(e) => { setEquipment(e.target.value); getExercises() }} id="">
-                    <option value="equipment">Equipment Required?</option>
+                    <option value="">Equipment Required?</option>
                     <option value="none">No</option>
                     <option value="yes">Yes</option>
                 </select>
