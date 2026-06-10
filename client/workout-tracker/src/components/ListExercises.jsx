@@ -5,10 +5,10 @@ const ListExercises = () => {
     const [muscle, setMuscle] = useState("");
     const [equipment, setEquipment] = useState("");
 
-    const getExercises = async () => {
+    const getExercises = async (mus, equip) => {
         try {
-            if (muscle != "" || equipment != "") {
-                const response = await fetch(`http://localhost:8080/exercises/${muscle}&${equipment}`);
+            if (mus != "" || equip != "") {
+                const response = await fetch(`http://localhost:8080/exercises/${mus}&${equip}`);
                 const jsonData = await response.json();
 
                 setExercises(jsonData)
@@ -24,8 +24,9 @@ const ListExercises = () => {
             console.error(err.message);
         }
     }
+
     useEffect(() => {
-        getExercises();
+        getExercises("", "");
     }, []);
 
     const search = async (input) => {
@@ -33,12 +34,12 @@ const ListExercises = () => {
             // exercise names in database are lower case now
             // need to make sure the searches match that
             input = input.toLowerCase()
-            if (input.length > 0) {
-                const response = await fetch(`http://localhost:8080/exercises/${input}`);
-                const jsonData = await response.json();
 
-                setExercises(jsonData);
-            }
+            const response = await fetch(`http://localhost:8080/exercises/${input}`);
+            const jsonData = await response.json();
+
+            setExercises(jsonData);
+
         } catch (err) {
             console.error(err.message);
         }
@@ -46,9 +47,9 @@ const ListExercises = () => {
     return (
         <Fragment>
             <h1>Exercises</h1>
+            <input type="text" onChange={(e) => { search(e.target.value) }} />
             <form>
-                <input type="text" onChange={ (e) => {search(e.target.value)}} />
-                <select onChange={(e) => { setMuscle(e.target.value); getExercises() }} id="">
+                <select onChange={(e) => { setMuscle(e.target.value); getExercises(e.target.value, equipment) }} id="">
                     <option value="">Choose muscle group</option>
                     <option value="Lats">Lats</option>
                     <option value="Upper Back">Upper Back</option>
@@ -62,7 +63,7 @@ const ListExercises = () => {
                     <option value="Glutes">Glutes</option>
                     <option value="Calves">Calves</option>
                 </select>
-                <select onChange={(e) => { setEquipment(e.target.value); getExercises() }} id="">
+                <select onChange={(e) => { setEquipment(e.target.value); getExercises(muscle, e.target.value) }} id="">
                     <option value="">Equipment Required?</option>
                     <option value="none">No</option>
                     <option value="yes">Yes</option>

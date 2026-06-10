@@ -25,7 +25,7 @@ app.get("/exercises", async (req, res) => {
 app.get("/exercises/{:muscle}&{:equipment}", async (req, res) => {
     try {
         const { muscle, equipment } = req.params;
-        console.log(equipment)
+
         if (equipment == undefined) {
             var matchExercise = await pool.query(`
                 SELECT * FROM exercises WHERE $1 = ANY (muscle_groups)`, [muscle])
