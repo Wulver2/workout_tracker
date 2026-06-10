@@ -27,6 +27,12 @@ const ListWorkouts = () => {
         }
     };
 
+    const deleteAssurance = (index) => {
+        if (confirm("Are you sure you want to delete this workout? Deleting will be permanent")) {
+            deleteWorkout(workouts[index]["session_id"]);
+        }
+    }
+
     useEffect(() => {
         getWorkouts();
     }, []);
@@ -70,7 +76,7 @@ const ListWorkouts = () => {
                             <td>
                                 <button>edit</button>
                                 {/*ToDo add a warning that this is permenant*/}
-                                <button onClick={() => deleteWorkout(workouts[index]["session_id"])}>
+                                <button onClick={() => deleteAssurance(index)}>
                                 delete
                                 </button></td>
                         </tr>
