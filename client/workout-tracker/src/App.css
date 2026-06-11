@@ -42,5 +42,16 @@ td button {
   margin: 10px;
 }
 
+button.remove {
+  background-color: red;
+  border-color: red;
+}
 
+button.edit {
+  background-color: rgb(82, 151, 21);
+  border-color:  rgb(82, 151, 21);
+}
 
+button {
+  border-radius: 5px;
+}

@@ -74,9 +74,9 @@ const ListWorkouts = () => {
                                 ))}
                             </td>
                             <td>
-                                <button>edit</button>
+                                <button className="edit">edit</button>
                                 {/*ToDo add a warning that this is permenant*/}
-                                <button onClick={() => deleteAssurance(index)}>
+                                <button onClick={() => deleteAssurance(index)} className="remove">
                                 delete
                                 </button></td>
                         </tr>

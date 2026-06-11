@@ -65,15 +65,6 @@ app.get("/exercises/:search", async (req, res) => {
     }
 })
 
-
-// ROUTES for prev_workout
-// Create (not really creating new one, just 
-// adding workout_session id to table once finished)
-// Get
-// Edit(similar to create)
-// (Should old workouts be able to be deleted by users?)
-
-
 // ROUTES for workout_session and exercise_sets
 // Create
 app.post("/workouts", async (req, res) => {

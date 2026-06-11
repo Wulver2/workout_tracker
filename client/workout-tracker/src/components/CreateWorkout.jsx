@@ -12,7 +12,7 @@ const CreateWorkout = () => {
 
     const [name, setName] = useState("workout");
     const [sessionExercises, setSessionExercises] = useState([
-        { exercise_id: '', sets_performed: '', reps: '', rir: '', weight: 0}
+        { exercise_id: '', sets_performed: '', reps: '', rir: '', weight: 0 }
     ]);
     const [date, setDate] = useState(defaultDate);
 
@@ -107,9 +107,9 @@ const CreateWorkout = () => {
                                 ))}
                             </select>
                             {/* weight */}
-                            <input type="number" placeholder="Top weight" 
-                            onChange={(e) => updateExercise(index, "weight", e.target.value)}
-                            min={0} step={0.1}/>
+                            <input type="number" placeholder="Top weight"
+                                onChange={(e) => updateExercise(index, "weight", e.target.value)}
+                                min={0} step={0.1} />
                             {/* sets */}
                             <input type="number" placeholder="Sets" onChange=
                                 {(e) => updateExercise(index, "sets_performed", e.target.value)} min={1} required />
@@ -121,7 +121,9 @@ const CreateWorkout = () => {
                                 {(e) => updateExercise(index, "rir", e.target.value)} min={0} />
 
                             {/* remove exercise */}
-                            <button type="button" onClick={(e) => removeExercise(index)}> Remove Exercise</button>
+                            <button type="button" onClick={(e) => removeExercise(index)} className="remove">
+                                Remove Exercise
+                            </button>
 
                         </div>
 
@@ -129,7 +131,9 @@ const CreateWorkout = () => {
                 </div>
                 {/* add exercise */}
                 <div id="form_buttons">
-                    <button type="button" onClick={addExercise}>+ Add Exercise</button>
+                    <button type="button" onClick={addExercise} className="edit">
+                        + Add Exercise
+                    </button>
 
                     <button type="submit">Submit</button>
                 </div>
