@@ -1,9 +1,13 @@
 import React, { Fragment, useEffect, useState } from "react";
+import EditWorkout from "./EditWorkout";
 
 const ListWorkouts = () => {
     const [workouts, setWorkouts] = useState([]);
+    const [sessionExercises, setSessionExercises] = useState([
+        { exercise_id: '', sets_performed: '', reps: '', rir: '', weight: 0 }
+    ]);
 
-    const getWorkouts = async() => {
+    const getWorkouts = async () => {
         try {
             const res = await fetch("http://localhost:8080/workouts")
             const jsonData = await res.json();
@@ -69,17 +73,17 @@ const ListWorkouts = () => {
                                 {workouts[index]["exercises"].map((ex, i) => (
                                     <div key={i}>
                                         {ex["exercise_name"]}: {ex["weight"]}  {ex["reps"]} {ex["sets"]}
-                                         at {ex["rir"]} RIR
+                                        at {ex["rir"]} RIR
                                     </div>
                                 ))}
                             </td>
                             <td>
-                                <button className="edit">edit</button>
+                                <EditWorkout></EditWorkout>
                                 {/*ToDo add a warning that this is permenant*/}
                                 <button onClick={() => deleteAssurance(index)} className="remove">
-                                delete
+                                    Delete
                                 </button></td>
-                        </tr>
+                        </tr>                        
                     ))}
                 </tbody>
             </table>
