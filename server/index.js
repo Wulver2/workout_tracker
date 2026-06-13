@@ -125,10 +125,19 @@ app.get("/workouts", async (req, res) => {
 
 // Edit
 app.put("/workout/:id", async (req, res) => {
-    // need to get req body
-    // should sessions be editable or should only the exercises within be?
     try {
-        const update = await pool.query(`UPDATE workout_session SET     WHERE session_id = ${id}`)
+        const { id } = req.params;
+        const { name, date, sessionExercises } = req.body;
+        const update_workout = await pool.query(`
+            UPDATE workout_session 
+            SET name = $1, day_of session = $2
+            WHERE session_id = ${id};`, 
+        [
+            name,
+            date
+        ]);
+
+        const update_exercises = await pool.query(``);
     } catch (err) {
         console.error(err.message);
     }

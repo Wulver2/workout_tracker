@@ -1,9 +1,10 @@
 import React, {useState} from "react";
 
 const EditWorkout = () => {
-
+    const [name, setName] = useState("workout");
+    const [date, setDate] = useState(Date());
     const [sessionExercises, setSessionExercises] = useState([
-        { exercise_id: '', sets_performed: '', reps: '', rir: '', weight: 0 }
+        {sessExercise_id:'', exercise_id: '', sets_performed: '', reps: '', rir: '', weight: 0 }
     ]);
 
     const updateWorkout = async (e, id) => {
