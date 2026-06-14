@@ -29,6 +29,12 @@ const EditWorkout = () => {
             <button className="edit">
                 Edit
             </button>
+            <form className="hide_form">
+                <label>name</label>
+                <input type="text" value={name}/>
+                <label>date</label>
+                <input type="date" />
+            </form>
         </>
     )
 }

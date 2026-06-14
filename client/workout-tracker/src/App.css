@@ -55,3 +55,7 @@ button.edit {
 button {
   border-radius: 5px;
 }
+
+.hide_form {
+  display: none;
+}
