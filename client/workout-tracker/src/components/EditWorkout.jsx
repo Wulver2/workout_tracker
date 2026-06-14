@@ -24,16 +24,29 @@ const EditWorkout = () => {
         }
     };
 
+    const show = () => {
+        // With the edit button being it's own component
+        // shouldn't have to worry about other forms that may be open on page
+        const hidden_form = document.getElementById("edit_form");
+        hidden_form.classList.remove("hide_form");
+        
+    };
+    const hide = () => {
+        const hidden_form = document.getElementById("edit_form");
+        hidden_form.classList.add("hide_form")
+    }
+
     return (
         <>
-            <button className="edit">
+            <button className="edit" onClick={(e) => show()}>
                 Edit
             </button>
-            <form className="hide_form">
+            <form id="edit_form" className="hide_form">
                 <label>name</label>
-                <input type="text" value={name}/>
+                <input type="text" placeholder={name}/>
                 <label>date</label>
                 <input type="date" />
+                <button type="button" onClick={(e) => hide()}>cancel</button>
             </form>
         </>
     )
