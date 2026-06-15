@@ -124,27 +124,28 @@ app.get("/workouts", async (req, res) => {
 });
 
 // Edit
-app.put("/workout/:id", async (req, res) => {
+app.put("/workouts/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const { name, date, sessionExercises } = req.body;
         const update_workout = await pool.query(`
             UPDATE workout_session 
-            SET name = $1, day_of session = $2
+            SET name = $1, day_of_session = $2
             WHERE session_id = ${id};`, 
         [
             name,
             date
         ]);
 
-        const update_exercises = await pool.query(``);
+        //const update_exercises = await pool.query(``);
+        res.json("A workout was updated");
     } catch (err) {
         console.error(err.message);
     }
 });
 
 
-app.delete("/workout/:id", async (req, res) => {
+app.delete("/workouts/:id", async (req, res) => {
     try {
         const { id } = req.params
         const deleteExerciseData = await pool.query(`

@@ -1,13 +1,15 @@
 import React, {useState} from "react";
-
-const EditWorkout = () => {
+// In order to have the edits appear without reloading page
+// may have to send a new get request in ListWorkouts for that
+// particular workout
+const EditWorkout = ({id}) => {
     const [name, setName] = useState("workout");
     const [date, setDate] = useState(Date());
     const [sessionExercises, setSessionExercises] = useState([
-        {sessExercise_id:'', exercise_id: '', sets_performed: '', reps: '', rir: '', weight: 0 }
+        {exercise_id: '', sets_performed: '', reps: '', rir: '', weight: 0 }
     ]);
 
-    const updateWorkout = async (e, id) => {
+    const updateWorkout = async (e) => {
         e.preventDefault();
 
         try {
@@ -41,11 +43,12 @@ const EditWorkout = () => {
             <button className="edit" onClick={(e) => show()}>
                 Edit
             </button>
-            <form id="edit_form" className="hide_form">
+            <form id="edit_form" className="hide_form" onSubmit={(e) => updateWorkout(e)}>
                 <label>name</label>
-                <input type="text" placeholder={name}/>
+                <input type="text" placeholder={name} onChange={(e) => setName(e.target.value)}/>
                 <label>date</label>
-                <input type="date" />
+                <input type="date" placeholder={date} onChange={(e) => setDate(e.target.value)}/>
+                <button type="submit">Submit</button>
                 <button type="button" onClick={(e) => hide()}>cancel</button>
             </form>
         </>

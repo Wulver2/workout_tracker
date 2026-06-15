@@ -20,7 +20,7 @@ const ListWorkouts = () => {
 
     const deleteWorkout = async (id) => {
         try {
-            const deleteWorkout = await fetch(`http://localhost:8080/workout/${id}`, {
+            const deleteWorkout = await fetch(`http://localhost:8080/workouts/${id}`, {
                 method: "DELETE"
             });
 
@@ -78,7 +78,7 @@ const ListWorkouts = () => {
                                 ))}
                             </td>
                             <td>
-                                <EditWorkout></EditWorkout>
+                                <EditWorkout id={workouts[index]["session_id"]}></EditWorkout>
                                 {/*ToDo add a warning that this is permenant*/}
                                 <button onClick={() => deleteAssurance(index)} className="remove">
                                     Delete
