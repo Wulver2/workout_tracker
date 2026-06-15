@@ -43,7 +43,7 @@ const EditWorkout = ({id}) => {
             <button className="edit" onClick={(e) => show()}>
                 Edit
             </button>
-            <form id="edit_form" className="hide_form" onSubmit={(e) => updateWorkout(e)}>
+            <form id="edit_form" className="hide_form" onSubmit={(e) => {updateWorkout(e); hide()}}>
                 <label>name</label>
                 <input type="text" placeholder={name} onChange={(e) => setName(e.target.value)}/>
                 <label>date</label>
