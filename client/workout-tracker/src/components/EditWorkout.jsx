@@ -6,7 +6,7 @@ const EditWorkout = (id, n, exercises) => {
     const [name, setName] = useState(n);
     const [date, setDate] = useState(Date());
     const [sessionExercises, setSessionExercises] = useState([
-        {exercise_id: '', sets_performed: '', reps: '', rir: '', weight: 0 }
+        {exercise_id: '', sets_performed: '', reps: '', rir: '', weight: 0, sets_id:''}
     ]);
 
     const updateWorkout = async (e) => {

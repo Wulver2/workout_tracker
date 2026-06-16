@@ -110,7 +110,8 @@ app.get("/workouts", async (req, res) => {
                 'reps', es.reps,
                 'sets', es.sets_performed,
                 'rir', es.rir,
-                'weight', es.top_weight
+                'weight', es.top_weight,
+                'sets_id', es.exercise_sets_id
             )) AS exercises
             FROM workout_session AS wo
             JOIN exercise_sets as es ON wo.session_id = es.session_id

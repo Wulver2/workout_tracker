@@ -60,8 +60,6 @@ const ListWorkouts = () => {
                 </thead>
 
                 <tbody>
-                    {/* figure out how to combine exercises with workouts
-                     with same session_id */}
                     {workouts.map((fields, index) => (
                         <tr key={workouts[index]["session_id"]} className="workouts">
                             <td>{workouts[index]["name"]}</td>
