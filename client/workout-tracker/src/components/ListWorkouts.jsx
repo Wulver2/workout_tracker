@@ -3,9 +3,6 @@ import EditWorkout from "./EditWorkout";
 
 const ListWorkouts = () => {
     const [workouts, setWorkouts] = useState([]);
-    const [sessionExercises, setSessionExercises] = useState([
-        { exercise_id: '', sets_performed: '', reps: '', rir: '', weight: 0 }
-    ]);
 
     const getWorkouts = async () => {
         try {
@@ -78,8 +75,12 @@ const ListWorkouts = () => {
                                 ))}
                             </td>
                             <td>
-                                <EditWorkout id={workouts[index]["session_id"]}></EditWorkout>
-                                {/*ToDo add a warning that this is permenant*/}
+                                <EditWorkout 
+                                id={workouts[index]["session_id"]}
+                                n={workouts[index]["name"]}
+                                exercises={workouts[index]["exercises"]}>
+                                    
+                                </EditWorkout>
                                 <button onClick={() => deleteAssurance(index)} className="remove">
                                     Delete
                                 </button></td>

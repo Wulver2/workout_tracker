@@ -30,7 +30,7 @@ app.get("/exercises/{:muscle}&{:equipment}", async (req, res) => {
             var matchExercise = await pool.query(`
                 SELECT * FROM exercises WHERE $1 = ANY (muscle_groups)`, [muscle])
         }
-        else if(muscle == undefined) {
+        else if (muscle == undefined) {
             var matchExercise = await pool.query(`
                 SELECT * FROM exercises Where equipment = $1`, [equipment])
         }
@@ -101,6 +101,7 @@ app.post("/workouts", async (req, res) => {
 
 // Get
 app.get("/workouts", async (req, res) => {
+    //need to get the particular exercise data id to for editing later
     try {
         const workouts = await pool.query(`
             SELECT wo.session_id, wo.name, wo.day_of_session AS date,
@@ -131,13 +132,32 @@ app.put("/workouts/:id", async (req, res) => {
         const update_workout = await pool.query(`
             UPDATE workout_session 
             SET name = $1, day_of_session = $2
-            WHERE session_id = ${id};`, 
-        [
-            name,
-            date
-        ]);
+            WHERE session_id = $3;`,
+            [
+                name,
+                date,
+                id
+            ]);
 
-        //const update_exercises = await pool.query(``);
+        for (var i = 0; i < sessionExercises.length; i++) {
+            const exercise = sessionExercises[i]
+
+            await pool.query(`
+                UPDATE exercise_sets
+                SET exercise_id = $1, reps = $2, sets_performed = $3
+                    rir = $4, top_weight = $5
+                WHERE session_id = $6 and exercise_sets_id = $7`,
+                [
+                    exercise.exercise_id,
+                    exercise.reps,
+                    exercise.sets_performed,
+                    exercise.rir,
+                    exercise.weight,
+                    id,
+                    exercise.sets_id
+                ])
+        }
+
         res.json("A workout was updated");
     } catch (err) {
         console.error(err.message);

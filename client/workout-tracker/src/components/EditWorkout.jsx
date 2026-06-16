@@ -2,8 +2,8 @@ import React, {useState} from "react";
 // In order to have the edits appear without reloading page
 // may have to send a new get request in ListWorkouts for that
 // particular workout
-const EditWorkout = ({id}) => {
-    const [name, setName] = useState("workout");
+const EditWorkout = (id, n, exercises) => {
+    const [name, setName] = useState(n);
     const [date, setDate] = useState(Date());
     const [sessionExercises, setSessionExercises] = useState([
         {exercise_id: '', sets_performed: '', reps: '', rir: '', weight: 0 }
