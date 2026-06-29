@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import EditWorkout from "./EditWorkout";
+import WorkoutForm from "./WorkoutForm";
 
 const ListWorkouts = () => {
     const [workouts, setWorkouts] = useState([]);
@@ -33,6 +34,8 @@ const ListWorkouts = () => {
             deleteWorkout(workouts[index]["session_id"]);
         }
     }
+
+    // delete exercise
 
     useEffect(() => {
         getWorkouts();
@@ -69,18 +72,16 @@ const ListWorkouts = () => {
                                     <div key={i}>
                                         {ex["exercise_name"]}: {ex["weight"]}  {ex["reps"]} {ex["sets"]}
                                         at {ex["rir"]} RIR
+                                        <button className="remove">-</button>
                                     </div>
                                 ))}
                             </td>
                             <td>
-                                <EditWorkout 
-                                id={workouts[index]["session_id"]}
-                                n={workouts[index]["name"]}
-                                exercises={workouts[index]["exercises"]}>
-                                    
-                                </EditWorkout>
+                                <WorkoutForm og_workout={workouts[index]}
+                                    workout_id={workouts[index]["session_id"]} 
+                                    edit={true}/>
                                 <button onClick={() => deleteAssurance(index)} className="remove">
-                                    Delete
+                                    Delete Workout
                                 </button></td>
                         </tr>                        
                     ))}

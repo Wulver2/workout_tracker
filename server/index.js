@@ -65,6 +65,18 @@ app.get("/exercises/:search", async (req, res) => {
     }
 })
 
+// remove exercise
+app.delete("/exercises/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const delExercise = await pool.query(`
+            DELETE FROM exercise_sets WHERE exercise_sets_id = $1
+        `, id);
+    }
+    catch(err) {
+        console.error(err);
+    }
+})
 // ROUTES for workout_session and exercise_sets
 // Create
 app.post("/workouts", async (req, res) => {
@@ -107,6 +119,7 @@ app.get("/workouts", async (req, res) => {
             SELECT wo.session_id, wo.name, wo.day_of_session AS date,
             json_agg(json_build_object(
                 'exercise_name', e.name,
+                'exercise_id', e.exercise_id,
                 'reps', es.reps,
                 'sets', es.sets_performed,
                 'rir', es.rir,
