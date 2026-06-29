@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from "react"
 
 
-const WorkoutForm = ({ og_workout, workout_id, edit = false, re_render}) => {
+const WorkoutForm = ({ og_workout, workout_id, edit = false, re_render }) => {
     // for exercise form drop down
     const [availableExercises, setAvailableExercises] = useState([]);
 
@@ -72,6 +72,11 @@ const WorkoutForm = ({ og_workout, workout_id, edit = false, re_render}) => {
         setSessionExercises(update);
     }
 
+    const hide = () => {
+        const hidden_form = document.getElementById("create_workout");
+        hidden_form.classList.add("hide_form")
+    }
+
     const handleSubmit = async (e) => {
         // on submit sends query to exercise_set table? for ids, then
         // inserts name, array of ids, and date to workout_session table
@@ -90,6 +95,7 @@ const WorkoutForm = ({ og_workout, workout_id, edit = false, re_render}) => {
             if (response.ok) {
                 if (re_render) {
                     re_render();
+                    hide();
                 }
             }
         } catch (err) {
@@ -99,9 +105,10 @@ const WorkoutForm = ({ og_workout, workout_id, edit = false, re_render}) => {
 
     };
 
+    //form should initially be hidden for edits
     return (
         <Fragment>
-            <form id="create_workout" onSubmit={handleSubmit}>
+            <form id="create_workout" className="hide_form" onSubmit={handleSubmit}>
 
                 <div className="form_item">
                     <label htmlFor="workout_name">Name of Workout: </label>

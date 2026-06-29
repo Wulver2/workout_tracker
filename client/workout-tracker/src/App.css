@@ -56,6 +56,6 @@ button {
   border-radius: 5px;
 }
 
-.hide_form {
+#create_workout.hide_form {
   display: none;
 }

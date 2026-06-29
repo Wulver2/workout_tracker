@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from "react";
-import EditWorkout from "./EditWorkout";
 import WorkoutForm from "./WorkoutForm";
 
 const ListWorkouts = () => {
@@ -48,6 +47,12 @@ const ListWorkouts = () => {
         return createdDate
     };
 
+    const show = () => {
+        const hidden_form = document.getElementById("create_workout");
+        hidden_form.classList.remove("hide_form");
+
+    };
+
     return (
         <Fragment>
             <h1>Current Workouts</h1>
@@ -77,14 +82,17 @@ const ListWorkouts = () => {
                                 ))}
                             </td>
                             <td>
+                                <button className="edit" onClick={(e) => show()}>
+                                    Edit
+                                </button>
                                 <WorkoutForm og_workout={workouts[index]}
-                                    workout_id={workouts[index]["session_id"]} 
+                                    workout_id={workouts[index]["session_id"]}
                                     edit={true}
-                                    re_render={getWorkouts}/>
+                                    re_render={getWorkouts} />
                                 <button onClick={() => deleteAssurance(index)} className="remove">
                                     Delete Workout
                                 </button></td>
-                        </tr>                        
+                        </tr>
                     ))}
                 </tbody>
             </table>
