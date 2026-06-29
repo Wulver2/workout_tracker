@@ -1,7 +1,7 @@
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useState, useEffect } from "react"
 
-// Creating a Workout will add new objcts to exercise sets
-const CreateWorkout = () => {
+
+const WorkoutForm = () => {
     // for exercise form drop down
     const [availableExercises, setAvailableExercises] = useState([]);
 
@@ -81,7 +81,6 @@ const CreateWorkout = () => {
 
     return (
         <Fragment>
-            <h1>Create a new Workout</h1>
             <form id="create_workout" onSubmit={handleSubmit}>
 
                 <div className="form_item">
@@ -140,7 +139,7 @@ const CreateWorkout = () => {
 
             </form>
         </Fragment>
-    );
+    )
 }
 
-export default CreateWorkout;
+export default WorkoutForm

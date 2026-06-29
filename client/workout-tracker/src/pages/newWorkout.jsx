@@ -1,10 +1,11 @@
 import { Fragment } from "react";
-import CreateWorkout from "../components/CreateWorkout";
+import WorkoutForm from "../components/WorkoutForm";
 
 export function NewWorkout() {
     return (
         <Fragment>
-            <CreateWorkout />
+            <h1>Create a new workout</h1>
+            <WorkoutForm />
         </Fragment>
     );
 }
