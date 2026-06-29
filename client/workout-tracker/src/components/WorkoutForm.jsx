@@ -39,7 +39,8 @@ const WorkoutForm = ({ og_workout, workout_id, edit = false }) => {
                 sets_performed: ex.sets,
                 reps: ex.reps,
                 rir: ex.rir,
-                weight: ex.weight
+                weight: ex.weight,
+                sets_id: ex.sets_id
             }))
             setSessionExercises(og_exercises)
         }
@@ -54,7 +55,7 @@ const WorkoutForm = ({ og_workout, workout_id, edit = false }) => {
     };
 
     const addExercise = () => {
-        setSessionExercises([...sessionExercises, { exercise_id: '', sets_performed: '', reps: '', rir: '' }]);
+        setSessionExercises([...sessionExercises, { exercise_id: '', sets_performed: '', reps: '', rir: '', sets_id: '' }]);
     };
     const removeExercise = (index) => {
         const element = sessionExercises[index]

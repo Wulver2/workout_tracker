@@ -158,9 +158,9 @@ app.put("/workouts/:id", async (req, res) => {
 
             await pool.query(`
                 UPDATE exercise_sets
-                SET exercise_id = $1, reps = $2, sets_performed = $3
+                SET exercise_id = $1, reps = $2, sets_performed = $3,
                     rir = $4, top_weight = $5
-                WHERE session_id = $6 and exercise_sets_id = $7`,
+                WHERE session_id = $6 and exercise_sets_id = $7;`,
                 [
                     exercise.exercise_id,
                     exercise.reps,
