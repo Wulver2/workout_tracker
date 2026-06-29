@@ -79,7 +79,8 @@ const ListWorkouts = () => {
                             <td>
                                 <WorkoutForm og_workout={workouts[index]}
                                     workout_id={workouts[index]["session_id"]} 
-                                    edit={true}/>
+                                    edit={true}
+                                    re_render={getWorkouts}/>
                                 <button onClick={() => deleteAssurance(index)} className="remove">
                                     Delete Workout
                                 </button></td>

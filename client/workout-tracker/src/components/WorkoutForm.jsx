@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from "react"
 
 
-const WorkoutForm = ({ og_workout, workout_id, edit = false }) => {
+const WorkoutForm = ({ og_workout, workout_id, edit = false, re_render}) => {
     // for exercise form drop down
     const [availableExercises, setAvailableExercises] = useState([]);
 
@@ -81,13 +81,17 @@ const WorkoutForm = ({ og_workout, workout_id, edit = false }) => {
             const method = edit ? "PUT" : "POST"
             const url = edit ? `http://localhost:8080/workouts/${workout_id}` : "http://localhost:8080/workouts";
             const body = { name, date, sessionExercises };
-            const response = fetch(url, {
+            const response = await fetch(url, {
                 method: method,
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
-            })
-
-            console.log(response);
+            });
+            // re render workouts with updated data
+            if (response.ok) {
+                if (re_render) {
+                    re_render();
+                }
+            }
         } catch (err) {
             console.error(err.message);
         }
