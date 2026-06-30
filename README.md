@@ -7,10 +7,10 @@ Current:
 * Warns users before delete
 * View exercises in database
 * Search and filter exercises based on name, equipment, and muscle groups targeted
-* Edit name and date of previous workouts
+* Update and add new exercises to existing workouts
+* Remove exercises from existing workouts
 
 Upcoming:
-* Ability to edit previous workouts
 * User authentication
 * Dashboard: quick view of last workout(s), display of new PR
 ## Built With
