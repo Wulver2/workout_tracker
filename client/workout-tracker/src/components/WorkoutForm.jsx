@@ -55,7 +55,7 @@ const WorkoutForm = ({ og_workout, workout_id, edit = false, re_render }) => {
     };
 
     const addExercise = () => {
-        setSessionExercises([...sessionExercises, { exercise_id: '', sets_performed: '', reps: '', rir: '', sets_id: '' }]);
+        setSessionExercises([...sessionExercises, { exercise_id: '', sets_performed: '', reps: '', rir: '', weight: 0 }]);
     };
     const removeExercise = (index) => {
         const element = sessionExercises[index]
@@ -81,7 +81,8 @@ const WorkoutForm = ({ og_workout, workout_id, edit = false, re_render }) => {
         // on submit sends query to exercise_set table? for ids, then
         // inserts name, array of ids, and date to workout_session table
         // exercise_sets order (exercise_id, reps, sets, rir)
-        e.preventDefault()
+        e.preventDefault();
+        console.log(sessionExercises);
         try {
             const method = edit ? "PUT" : "POST"
             const url = edit ? `http://localhost:8080/workouts/${workout_id}` : "http://localhost:8080/workouts";

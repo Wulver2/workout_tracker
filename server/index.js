@@ -71,9 +71,9 @@ app.delete("/exercises/:id", async (req, res) => {
         const { id } = req.params;
         const delExercise = await pool.query(`
             DELETE FROM exercise_sets WHERE exercise_sets_id = $1
-        `, id);
+        `, [id]);
     }
-    catch(err) {
+    catch (err) {
         console.error(err);
     }
 })
@@ -155,22 +155,39 @@ app.put("/workouts/:id", async (req, res) => {
 
         for (var i = 0; i < sessionExercises.length; i++) {
             const exercise = sessionExercises[i]
-
-            await pool.query(`
+            // For when new exercises are entered, they have nothing to update
+            // instead insert them into table
+            if (!exercise.sets_id) {
+                await pool.query(`
+                INSERT INTO exercise_sets (exercise_id, reps, sets_performed, rir, top_weight, session_id)
+                VALUES ($1, $2, $3, $4, $5, $6)`,
+                    [
+                        exercise.exercise_id,
+                        exercise.reps,
+                        exercise.sets_performed,
+                        exercise.rir,
+                        exercise.weight,
+                        id
+                    ]);
+            }
+            else {
+                await pool.query(`
                 UPDATE exercise_sets
                 SET exercise_id = $1, reps = $2, sets_performed = $3,
                     rir = $4, top_weight = $5
                 WHERE session_id = $6 and exercise_sets_id = $7;`,
-                [
-                    exercise.exercise_id,
-                    exercise.reps,
-                    exercise.sets_performed,
-                    exercise.rir,
-                    exercise.weight,
-                    id,
-                    exercise.sets_id
-                ])
+                    [
+                        exercise.exercise_id,
+                        exercise.reps,
+                        exercise.sets_performed,
+                        exercise.rir,
+                        exercise.weight,
+                        id,
+                        exercise.sets_id
+                    ])
+            }
         }
+
 
         res.json("A workout was updated");
     } catch (err) {

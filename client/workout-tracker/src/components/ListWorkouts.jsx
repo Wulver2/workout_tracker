@@ -22,17 +22,26 @@ const ListWorkouts = () => {
             });
 
             setWorkouts(workouts.filter(workout => workout.session_id !== id));
-            console.log(deleteWorkout);
         } catch (err) {
             console.error(err.message);
         }
     };
 
+    const deleteExercise = async (id) => {
+        try {
+            const deleteEx = await fetch(`http://localhost:8080/exercises/${id}`, {
+                method: "DELETE"
+            })
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+
     const deleteAssurance = (index) => {
         if (confirm("Are you sure you want to delete this workout? Deleting will be permanent")) {
             deleteWorkout(workouts[index]["session_id"]);
         }
-    }
+    };
 
     // delete exercise
 
@@ -77,7 +86,7 @@ const ListWorkouts = () => {
                                     <div key={i}>
                                         {ex["exercise_name"]}: {ex["weight"]}  {ex["reps"]} {ex["sets"]}
                                         at {ex["rir"]} RIR
-                                        <button className="remove">-</button>
+                                        <button className="remove" onClick={() => deleteExercise(ex["sets_id"])}>-</button>
                                     </div>
                                 ))}
                             </td>
