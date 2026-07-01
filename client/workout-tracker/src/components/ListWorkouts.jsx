@@ -27,11 +27,28 @@ const ListWorkouts = () => {
         }
     };
 
-    const deleteExercise = async (id) => {
+    const deleteExercise = async (workout_id, id) => {
         try {
+            /*
             const deleteEx = await fetch(`http://localhost:8080/exercises/${id}`, {
                 method: "DELETE"
-            })
+            });*/
+
+            setWorkouts(workouts =>
+                // find the correct workout first since exercises are nested within my workouts
+                workouts.map(sess => {
+                    if (sess.session_id === workout_id) {
+                        return {
+                            // other info within the workout object remain the same, while 
+                            // the exercises array is filtered to get rid of matchin exercise
+                            ...sess,
+                            exercises: sess.exercises.filter(ex => ex.sets_id !== id)
+                        };
+                    }
+                    return sess
+                })
+            );
+
         } catch (err) {
             console.error(err.message);
         }
@@ -59,6 +76,7 @@ const ListWorkouts = () => {
     const show = () => {
         const hidden_form = document.getElementById("create_workout");
         hidden_form.classList.remove("hide_form");
+        console.log(workouts)
 
     };
 
@@ -86,7 +104,8 @@ const ListWorkouts = () => {
                                     <div key={i}>
                                         {ex["exercise_name"]}: {ex["weight"]}  {ex["reps"]} {ex["sets"]}
                                         at {ex["rir"]} RIR
-                                        <button className="remove" onClick={() => deleteExercise(ex["sets_id"])}>-</button>
+                                        <button className="remove" onClick={() =>
+                                            deleteExercise(workouts[index]["session_id"], ex["sets_id"])}>-</button>
                                     </div>
                                 ))}
                             </td>
