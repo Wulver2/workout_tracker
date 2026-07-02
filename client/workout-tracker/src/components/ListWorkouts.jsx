@@ -29,11 +29,6 @@ const ListWorkouts = () => {
 
     const deleteExercise = async (workout_id, id) => {
         try {
-            /*
-            const deleteEx = await fetch(`http://localhost:8080/exercises/${id}`, {
-                method: "DELETE"
-            });*/
-
             setWorkouts(workouts =>
                 // find the correct workout first since exercises are nested within my workouts
                 workouts.map(sess => {
@@ -48,6 +43,10 @@ const ListWorkouts = () => {
                     return sess
                 })
             );
+
+            const deleteEx = await fetch(`http://localhost:8080/exercises/${id}`, {
+                method: "DELETE"
+            });
 
         } catch (err) {
             console.error(err.message);
