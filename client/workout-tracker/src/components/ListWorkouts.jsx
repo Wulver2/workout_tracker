@@ -101,8 +101,7 @@ const ListWorkouts = () => {
                             <td>
                                 {workouts[index]["exercises"].map((ex, i) => (
                                     <div key={i}>
-                                        {ex["exercise_name"]}: {ex["weight"]}  {ex["reps"]} {ex["sets"]}
-                                        at {ex["rir"]} RIR
+                                        {ex["exercise_name"]}: {ex["weight"]}  {ex["reps"]} {ex["sets"]} at {ex["rir"]} RIR
                                         <button className="remove" onClick={() =>
                                             deleteExercise(workouts[index]["session_id"], ex["sets_id"])}>-</button>
                                     </div>
