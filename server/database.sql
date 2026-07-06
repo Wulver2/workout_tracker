@@ -42,6 +42,7 @@ CREATE TABLE exercise_sets (
 );
 ALTER TABLE exercise_sets ADD session_id INT REFERENCES workout_session(session_id);
 -- user id linked to workout_sessions
+-- password will be hashed
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
