@@ -26,7 +26,7 @@ app.post('/register', async(req, res) => {
             hashedPw
         ]);
     // generate token
-    const accessToken = jwt.sign(
+    const refreshToken = jwt.sign(
         user, 
         process.env.REFRESH_JWT_TOKEN, 
         {expiresIn: "30d"});
