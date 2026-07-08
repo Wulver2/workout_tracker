@@ -10,6 +10,9 @@ app.post('/register', async(req, res) => {
     const {first_name, last_name, email, password} = req.body;
 
     // check that all fields are defined
+    if (!first_name || !last_name || !email|| !password) {
+        return res.status(400)
+    }
     // check if user exists 
     // hash password before storing
     const hashedPw = await bcrypt.hash(password, 10);
