@@ -6,20 +6,27 @@ const pool = require("./db");
 
 
 // create account
-app.post('/register', (req, res) => {
+app.post('/register', async(req, res) => {
     const {first_name, last_name, email, password} = req.body;
 
     // check that all fields are defined
     // check if user exists 
     // hash password before storing
+    const hashedPw = await bcrypt.hash(password, 10);
 
+    const registerUser = await pool.query(`
+        INSERT INTO users (first_name, last_name, email , password)
+        VALUES ($1, $2, $3, $4)`, [
+            first_name,
+            last_name,
+            email,
+            hashedPw
+        ]);
     // generate token
     const accessToken = jwt.sign(
         user, 
         process.env.ACCESS_JWT_SECRET, 
         {expiresIn: "30d"});
-
-    res.json({accessToken : accessToken})
 
 })
 
