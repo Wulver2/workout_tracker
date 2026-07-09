@@ -14,6 +14,12 @@ app.post('/register', async(req, res) => {
         return res.status(400)
     }
     // check if user exists 
+    const exist = await pool.query(`SELECT * FROM users WHERE email = $1`, [
+        email
+    ])
+    if (exist.rows.length > 0) {
+        return res.status(400);
+    }
     // hash password before storing
     const hashedPw = await bcrypt.hash(password, 10);
 
