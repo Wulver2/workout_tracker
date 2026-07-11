@@ -45,7 +45,9 @@ app.post('/login', async(req, res) => {
     if (!email || !password) {
         return res.status(400)
     }
-
-    
+    // have to compare password, hashed in database, but not when user enters it
+    const user = await pool.query(`SELECT * FROM users WHERE email = $1`, [
+        email
+    ])
 })
 app.listen(8080)
