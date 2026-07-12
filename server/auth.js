@@ -43,11 +43,14 @@ app.post('/login', async(req, res) => {
     const {email, password} = req.body;
 
     if (!email || !password) {
-        return res.status(400)
+        return res.status(400);
     }
     // have to compare password, hashed in database, but not when user enters it
     const user = await pool.query(`SELECT * FROM users WHERE email = $1`, [
         email
-    ])
+    ]);
+
+    const isMatch = bcrypt.compare(password, user.rows[0].password);
+
 })
 app.listen(8080)
