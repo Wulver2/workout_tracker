@@ -33,7 +33,7 @@ app.post('/register', async(req, res) => {
         ]);
     // generate token
     const refreshToken = jwt.sign(
-        user, 
+        registerUser.rows[0].id, 
         process.env.REFRESH_JWT_TOKEN, 
         {expiresIn: "30d"});
 
@@ -52,5 +52,9 @@ app.post('/login', async(req, res) => {
 
     const isMatch = bcrypt.compare(password, user.rows[0].password);
 
+    if (!isMatch) {
+        return res.status(400);
+    }
+
 })
-app.listen(8080)
+
