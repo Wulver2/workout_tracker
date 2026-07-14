@@ -48,7 +48,17 @@ app.post('/register', async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: "strict",
-            maxAge: 30 * 24 * 60 * 60 * 10000 //30 days
+            maxAge: 30 * 24 * 60 * 60 * 10000 // 30 days
+        })
+        // respond with access token to be stored in state
+        res.json({
+            accessToken,
+            user: {
+                id: registerUser.rows[0].id,
+                first_name: registerUser.rows[0].first_name,
+                last_name: registerUser.rows[0].last_name,
+                email: registerUser.rows[0].email
+            }
         })
     } catch (err) {
         console.error(err.message);
@@ -91,7 +101,17 @@ app.post('/login', async (req, res) => {
             sameSite: "strict",
             maxAge: 30 * 24 * 60 * 60 * 10000 //30 days
         })
-    } catch(err) {
+
+        res.json({
+            accessToken,
+            user: {
+                id: user.rows[0].id,
+                first_name: user.rows[0].first_name,
+                last_name: user.rows[0].last_name,
+                email: user.rows[0].email
+            }
+        })
+    } catch (err) {
         console.error(err.message);
     }
 
