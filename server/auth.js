@@ -48,7 +48,7 @@ app.post('/register', async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: "strict",
-            maxAge: 30 * 24 * 60 * 60 * 10000 // 30 days
+            maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
         })
         // respond with access token to be stored in state
         res.json({
@@ -79,7 +79,7 @@ app.post('/login', async (req, res) => {
             email
         ]);
 
-        const isMatch = bcrypt.compare(password, user.rows[0].password);
+        const isMatch = await bcrypt.compare(password, user.rows[0].password);
 
         if (!isMatch) {
             return res.status(400);
@@ -99,7 +99,7 @@ app.post('/login', async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: "strict",
-            maxAge: 30 * 24 * 60 * 60 * 10000 //30 days
+            maxAge: 30 * 24 * 60 * 60 * 1000 //30 days
         })
 
         res.json({
@@ -116,4 +116,8 @@ app.post('/login', async (req, res) => {
     }
 
 })
+
+const verifyToken = (req, res) => {
+
+}
 
