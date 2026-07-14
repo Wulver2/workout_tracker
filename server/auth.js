@@ -47,6 +47,7 @@ app.post('/register', async (req, res) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: "strict",
+        maxAge: 30 * 24 * 60 * 60 * 10000 //30 days
     })
 
 })
@@ -82,6 +83,7 @@ app.post('/login', async (req, res) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: "strict",
+        maxAge: 30 * 24 * 60 * 60 * 10000 //30 days
     })
 
 })
