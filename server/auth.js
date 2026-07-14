@@ -32,10 +32,16 @@ app.post('/register', async(req, res) => {
             hashedPw
         ]);
     // generate token
+    //store in http-only cookie
     const refreshToken = jwt.sign(
         registerUser.rows[0].id, 
         process.env.REFRESH_JWT_TOKEN, 
         {expiresIn: "30d"});
+
+    const accessToken = jwt.sign(
+        registerUser.rows[0].id, 
+        process.env.ACCESS_JWT_TOKEN, 
+        {expiresIn: "15m"});
 
 })
 
@@ -55,6 +61,16 @@ app.post('/login', async(req, res) => {
     if (!isMatch) {
         return res.status(400);
     }
+    
+    const refreshToken = jwt.sign(
+        user.rows[0].id, 
+        process.env.REFRESH_JWT_TOKEN, 
+        {expiresIn: "30d"});
+
+    const accessToken = jwt.sign(
+        user.rows[0].id, 
+        process.env.ACCESS_JWT_TOKEN, 
+        {expiresIn: "15m"});
 
 })
 
