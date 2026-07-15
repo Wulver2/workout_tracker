@@ -3,7 +3,9 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pool = require("./db");
+const cookieParser = require('cookie-parser');
 
+app.use(cookieParser());
 
 // create account
 app.post('/register', async (req, res) => {
@@ -116,10 +118,33 @@ app.post('/login', async (req, res) => {
     } catch (err) {
         console.error(err.message);
     }
-
+ 
 })
 
-const verifyToken = (req, res) => {
+app.get('/isAuth', verifyToken, (req, res) => {
+    console.log("User is authenticated");
+})
 
+const verifyToken = (req, res, next) => {
+    const token = req.headers['authorization'];
+
+    if (!token) {
+       return res.status(400);
+    }
+
+    jwt.verify(token, process.env.ACCESS_JWT_TOKEN, (err, decoded) => {
+        if (err) {
+            res.status(400).message("failed authentication")
+        } 
+        else {
+            req.user_id = decoded.id;
+            next();
+        }
+    })
 }
+
+app.post('/refresh', (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+
+})
 
