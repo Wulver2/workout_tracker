@@ -85,13 +85,15 @@ app.post('/login', async (req, res) => {
             return res.status(400);
         }
 
+        const user_id =  user.rows[0].id
+
         const refreshToken = jwt.sign(
-            user.rows[0].id,
+            user_id,
             process.env.REFRESH_JWT_TOKEN,
             { expiresIn: "30d" });
 
         const accessToken = jwt.sign(
-            user.rows[0].id,
+            user_id,
             process.env.ACCESS_JWT_TOKEN,
             { expiresIn: "15m" });
 
@@ -105,7 +107,7 @@ app.post('/login', async (req, res) => {
         res.json({
             accessToken,
             user: {
-                id: user.rows[0].id,
+                id: user_id,
                 first_name: user.rows[0].first_name,
                 last_name: user.rows[0].last_name,
                 email: user.rows[0].email
