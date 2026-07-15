@@ -84,7 +84,7 @@ app.delete("/exercises/:id", async (req, res) => {
 })
 // ROUTES for workout_session and exercise_sets
 // Create
-app.post("/workouts", async (req, res) => {
+app.post("/workouts", verifyToken, async (req, res) => {
     try {
         const { name, date, sessionExercises } = req.body;
         // need to return session id so i can use them for a
@@ -117,7 +117,7 @@ app.post("/workouts", async (req, res) => {
 });
 
 // Get
-app.get("/workouts", async (req, res) => {
+app.get("/workouts", verifyToken, async (req, res) => {
     //need to get the particular exercise data id to for editing later
     try {
         const workouts = await pool.query(`
@@ -144,7 +144,7 @@ app.get("/workouts", async (req, res) => {
 });
 
 // Edit
-app.put("/workouts/:id", async (req, res) => {
+app.put("/workouts/:id", verifyToken, async (req, res) => {
     try {
         const { id } = req.params;
         const { name, date, sessionExercises } = req.body;
@@ -201,7 +201,7 @@ app.put("/workouts/:id", async (req, res) => {
 });
 
 
-app.delete("/workouts/:id", async (req, res) => {
+app.delete("/workouts/:id", verifyToken, async (req, res) => {
     try {
         const { id } = req.params
         const deleteExerciseData = await pool.query(`
