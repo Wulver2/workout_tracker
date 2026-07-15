@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { Exercises } from './pages/exercises';
 import { NewWorkout } from './pages/newWorkout';
 import { CurrWorkouts } from './pages/currWorkouts';
+import { Register } from './pages/register';
+import { Login } from './pages/login';
 import { Layout } from './components/Layout';
 import './App.css'
 
@@ -13,9 +15,11 @@ function App() {
       <Routes>
         <Route element= {<Layout/>}>
           <Route path='/' element={<h1>Hello</h1>}/>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/register' element={<Register/>}/>
           <Route path='/exercises' element={<Exercises/>}/>
           <Route path='/new_workout' element={<NewWorkout/>}/>
-          <Route path='current_workouts' element={<CurrWorkouts/>}/>
+          <Route path='/current_workouts' element={<CurrWorkouts/>}/>
         </Route>
       </Routes>
     </Router>

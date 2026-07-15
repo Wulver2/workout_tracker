@@ -83,6 +83,7 @@ app.delete("/exercises/:id", async (req, res) => {
     }
 })
 // ROUTES for workout_session and exercise_sets
+// TODO: for create and edit workouts connect to user table using id
 // Create
 app.post("/workouts", verifyToken, async (req, res) => {
     try {
