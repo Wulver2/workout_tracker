@@ -87,7 +87,7 @@ app.post('/login', async (req, res) => {
             return res.status(400);
         }
 
-        const user_id =  user.rows[0].id
+        const user_id = user.rows[0].id
 
         const refreshToken = jwt.sign(
             user_id,
@@ -118,7 +118,7 @@ app.post('/login', async (req, res) => {
     } catch (err) {
         console.error(err.message);
     }
- 
+
 })
 
 app.get('/isAuth', verifyToken, (req, res) => {
@@ -129,13 +129,13 @@ const verifyToken = (req, res, next) => {
     const token = req.headers['authorization'];
 
     if (!token) {
-       return res.status(400);
+        return res.status(400);
     }
 
     jwt.verify(token, process.env.ACCESS_JWT_TOKEN, (err, decoded) => {
         if (err) {
             res.status(400).message("failed authentication")
-        } 
+        }
         else {
             req.user_id = decoded.id;
             next();
@@ -143,8 +143,28 @@ const verifyToken = (req, res, next) => {
     })
 }
 
+//occurs when access token expires, needs to check if refresh is still valid
 app.post('/refresh', (req, res) => {
     const refreshToken = req.cookies.refreshToken;
+
+    // front end will send them back to login
+    if (!refreshToken) {
+        return res.status(401)
+    }
+
+    jwt.verify(refreshToken, process.env.REFRESH_JWT_TOKEN, (err, decoded) => {
+        if (err) {
+            return res.status(401)
+        }
+        // generate new access token
+        const accessToken = jwt.sign(
+            decoded.id,
+            process.env.ACCESS_JWT_TOKEN,
+            { expiresIn: "15m" }
+        );
+
+        res.json(accessToken);
+    })
 
 })
 
