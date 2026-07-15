@@ -2,13 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const pool = require("./db");
+const pool = require("../db");
 const cookieParser = require('cookie-parser');
-
-app.use(cookieParser());
+const router = express.Router('express');
+ 
+router.use(cookieParser());
 
 // create account
-app.post('/register', async (req, res) => {
+router.post('/register', async (req, res) => {
 
     try {
         const { first_name, last_name, email, password } = req.body;
@@ -68,7 +69,7 @@ app.post('/register', async (req, res) => {
 
 })
 
-app.post('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
 
     try {
         const { email, password } = req.body;
@@ -121,7 +122,8 @@ app.post('/login', async (req, res) => {
 
 })
 
-app.get('/isAuth', verifyToken, (req, res) => {
+
+router.get('/isAuth', verifyToken, (req, res) => {
     console.log("User is authenticated");
 })
 
@@ -144,7 +146,7 @@ const verifyToken = (req, res, next) => {
 }
 
 //occurs when access token expires, needs to check if refresh is still valid
-app.post('/refresh', (req, res) => {
+router.post('/refresh', (req, res) => {
     const refreshToken = req.cookies.refreshToken;
 
     // front end will send them back to login
@@ -168,3 +170,6 @@ app.post('/refresh', (req, res) => {
 
 })
 
+module.exports = {
+    verifyToken
+};
