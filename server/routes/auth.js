@@ -8,6 +8,24 @@ const router = express.Router('express');
  
 router.use(cookieParser());
 
+const verifyToken = (req, res, next) => {
+    const token = req.headers['authorization'];
+
+    if (!token) {
+        return res.status(400);
+    }
+
+    jwt.verify(token, process.env.ACCESS_JWT_TOKEN, (err, decoded) => {
+        if (err) {
+            res.status(400).message("failed authentication")
+        }
+        else {
+            req.user_id = decoded.id;
+            next();
+        }
+    })
+}
+
 // create account
 router.post('/register', async (req, res) => {
 
@@ -127,24 +145,6 @@ router.get('/isAuth', verifyToken, (req, res) => {
     console.log("User is authenticated");
 })
 
-const verifyToken = (req, res, next) => {
-    const token = req.headers['authorization'];
-
-    if (!token) {
-        return res.status(400);
-    }
-
-    jwt.verify(token, process.env.ACCESS_JWT_TOKEN, (err, decoded) => {
-        if (err) {
-            res.status(400).message("failed authentication")
-        }
-        else {
-            req.user_id = decoded.id;
-            next();
-        }
-    })
-}
-
 //occurs when access token expires, needs to check if refresh is still valid
 router.post('/refresh', (req, res) => {
     const refreshToken = req.cookies.refreshToken;
@@ -171,5 +171,6 @@ router.post('/refresh', (req, res) => {
 })
 
 module.exports = {
-    verifyToken
+    verifyToken, 
+    router
 };

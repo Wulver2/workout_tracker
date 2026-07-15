@@ -2,12 +2,17 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const pool = require("./db");
+const {verifyToken, router: authRouter} = require('./routes/auth.js');
 
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:5176",
+    credentials: true
+}));
 
 app.use(express.json());
+app.use("/auth", authRouter); // workout routes will be protected
 
-// EXERCISE ROUTES
+// EXERCISE ROUTES (may move these to their own file in routes folder)
 // Get all exercises
 
 app.get("/exercises", async (req, res) => {
