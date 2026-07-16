@@ -1,6 +1,22 @@
+import React, { Fragment } from "react"
+import "../style/login.css"
 
 export function Login() {
+    // firstname, lastname, email, password
     return (
-        <h1>Log in</h1>
+        <Fragment>
+            <h1>Log in</h1>
+
+            <form id="login" action="">
+                <div className="user-info">
+                    <label htmlFor="" >email: </label>
+                    <input type="text" />
+                </div>
+                <div className="pw">
+                    <label htmlFor="" >password: </label>
+                    <input type="text" />
+                </div>
+            </form>
+        </Fragment>
     )
 }
