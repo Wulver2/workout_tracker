@@ -16,6 +16,7 @@ export function Login() {
                     <label htmlFor="" >password: </label>
                     <input type="text" />
                 </div>
+                <button>log in</button>
             </form>
         </Fragment>
     )

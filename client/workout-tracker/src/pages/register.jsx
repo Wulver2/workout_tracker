@@ -20,6 +20,7 @@ export function Register() {
                     <label htmlFor="" >confirm password: </label>
                     <input type="text" />
                 </div>
+                <button>Sign up</button>
             </form>
         </Fragment>
     )
