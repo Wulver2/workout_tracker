@@ -1,6 +1,12 @@
 import React, { Fragment } from "react"
 
 export function Register() {
+    const [form, setForm] = useState({
+        firstName: "",
+        lastname: "",
+        email: "",
+        password: ""
+    })
     return (
         <Fragment>
             <h1>register</h1>
