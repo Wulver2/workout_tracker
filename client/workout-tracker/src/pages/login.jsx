@@ -7,6 +7,11 @@ export function Login() {
         email: "",
         password: ""
     })
+
+    const handleSubmit = async(e) => {
+        // fetch route for login
+        
+    }
     return (
         <Fragment>
             <h1>Log in</h1>
