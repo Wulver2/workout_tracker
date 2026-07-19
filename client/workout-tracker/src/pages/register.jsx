@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React, { Fragment, useState } from "react"
 
 export function Register() {
     const [form, setForm] = useState({
@@ -14,7 +14,8 @@ export function Register() {
             <form id="login" action="">
                 <div className="user-info">
                     <label htmlFor="" >First name: </label>
-                    <input type="text" />
+                    <input type="text" value={form.firstName} onChange={(e) => {
+                    setForm({... form, firstName: e.target.value}); console.log(form)}}/>
                     <label htmlFor="" >Last name: </label>
                     <input type="text" />
                     <label htmlFor="" >email: </label>

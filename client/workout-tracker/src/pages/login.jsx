@@ -14,11 +14,14 @@ export function Login() {
             <form id="login" action="">
                 <div className="user-info">
                     <label htmlFor="" >email: </label>
-                    <input type="email" />
+                    <input type="email" value={form.email}
+                     onChange={(e) => setForm({...form, email: e.target.value})}/>
                 </div>
                 <div className="pw">
                     <label htmlFor="" >password: </label>
-                    <input type="text" />
+                    <input type="text" value={form.password}
+                    onChange={(e) => setForm({...form, password: e.target.value})}
+                    />
                 </div>
                 <button>log in</button>
             </form>
