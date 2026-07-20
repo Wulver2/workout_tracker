@@ -1,7 +1,7 @@
 import React, { Fragment, use, useState } from "react"
 import "../style/login.css"
 
-export function Login() {
+export function Login({ setUser }) {
     // firstname, lastname, email, password
     const [form , setForm] = useState({
         email: "",
@@ -10,13 +10,24 @@ export function Login() {
 
     const handleSubmit = async(e) => {
         // fetch route for login
-        
+        e.preventDefault();
+    
+        try {
+            const userInfo = await axios.post("http://localhost:8080/auth/login",
+                form
+            );
+            
+            setUser(userInfo.data);
+            //once logged in move to homepage (future dashboard)
+        } catch (err) {
+            console.error(err.message);
+        }
     }
     return (
         <Fragment>
             <h1>Log in</h1>
 
-            <form id="login" action="">
+            <form id="login" onSubmit={handleSubmit}>
                 <div className="user-info">
                     <label htmlFor="" >email: </label>
                     <input type="email" value={form.email}
