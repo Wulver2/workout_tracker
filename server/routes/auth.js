@@ -12,7 +12,7 @@ const verifyToken = (req, res, next) => {
     const token = req.headers['authorization'];
 
     if (!token) {
-        return res.status(400);
+        return res.status(401).json({message: "no token"});
     }
 
     jwt.verify(token, process.env.ACCESS_JWT_TOKEN, (err, decoded) => {
@@ -143,6 +143,7 @@ router.post('/login', async (req, res) => {
 
 router.get('/isAuth', verifyToken, (req, res) => {
     console.log("User is authenticated");
+    //returns user info
 })
 
 //occurs when access token expires, needs to check if refresh is still valid
