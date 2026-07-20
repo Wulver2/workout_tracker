@@ -15,7 +15,7 @@ export function Register() {
          be the same. if submit button is still pressed,
          fetch should not be made (will be done in a different func)*/
         console.log(val)
-        var passwordMessage = document.getElementById("pw-error"); 
+        var passwordMessage = document.getElementById("pw-error");
         if (val != form.password) {
             passwordMessage.className = ""
             return false
@@ -23,6 +23,18 @@ export function Register() {
         passwordMessage.className = "hide"
         return true
     }
+
+    const handleSubmit = async () => {
+        try {
+            const userInfo = await axios.post("http://localhost:8080/auth/register",
+                form);
+            setUser(userInfo.data);
+
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+    
     return (
         <Fragment>
             <h1>register</h1>
@@ -51,7 +63,7 @@ export function Register() {
                         value={form.password}
                         onChange={(e) => { setForm({ ...form, password: e.target.value }); }} />
                     <label htmlFor="" >confirm password: </label>
-                    <input type="password"  onChange={(e) => {comparePW(e.target.value)}}/>
+                    <input type="password" onChange={(e) => { comparePW(e.target.value) }} />
                     <p id="pw-error" className={"hide"}>Passwords do not match</p>
                 </div>
                 <button>Sign up</button>
