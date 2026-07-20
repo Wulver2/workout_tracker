@@ -1,6 +1,14 @@
 #login {
-    background-color: grey;
+    background-color: white;
     display: flex;
     flex-direction: column;
     
+}
+
+.hide {
+    display: none;
+}
+
+#pw-error {
+    color: red;
 }

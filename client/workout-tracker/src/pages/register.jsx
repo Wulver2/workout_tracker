@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react"
+import "../style/login.css"
 
 export function Register() {
     const [form, setForm] = useState({
@@ -11,14 +12,22 @@ export function Register() {
     const comparePW = (val) => {
         /* if false message in red should,
          appear stating that passwords must
-         be the same. if submit button is till pressed,
+         be the same. if submit button is still pressed,
          fetch should not be made (will be done in a different func)*/
+        console.log(val)
+        var passwordMessage = document.getElementById("pw-error"); 
+        if (val != form.password) {
+            passwordMessage.className = ""
+            return false
+        }
+        passwordMessage.className = "hide"
+        return true
     }
     return (
         <Fragment>
             <h1>register</h1>
 
-            <form id="login" action="">
+            <form id="login">
                 <div className="user-info">
                     <label htmlFor="" >First name: </label>
                     <input type="text"
@@ -38,11 +47,12 @@ export function Register() {
                 </div>
                 <div className="pw">
                     <label htmlFor="" >password: </label>
-                    <input type="text"
+                    <input type="password"
                         value={form.password}
                         onChange={(e) => { setForm({ ...form, password: e.target.value }); }} />
                     <label htmlFor="" >confirm password: </label>
-                    <input type="text" />
+                    <input type="password"  onChange={(e) => {comparePW(e.target.value)}}/>
+                    <p id="pw-error" className={"hide"}>Passwords do not match</p>
                 </div>
                 <button>Sign up</button>
             </form>
