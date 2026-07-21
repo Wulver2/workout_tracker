@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react"
 import axios from "axios"
 import "../style/login.css"
 
-export function Register() {
+export function Register({setUser}) {
     const [form, setForm] = useState({
         first_name: "",
         last_name: "",

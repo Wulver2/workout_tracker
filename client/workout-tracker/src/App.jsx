@@ -34,8 +34,8 @@ function App() {
       <Routes>
         <Route element= {<Layout/>}>
           <Route path='/' element={<h1>Hello</h1>}/>
-          <Route path='/login' element={<Login/>}/>
-          <Route path='/register' element={<Register/>}/>
+          <Route path='/login' element={<Login setUser={setUser}/>}/>
+          <Route path='/register' element={<Register setUser={setUser}/>}/>
           <Route path='/exercises' element={<Exercises/>}/>
           <Route path='/new_workout' element={<NewWorkout/>}/>
           <Route path='/current_workouts' element={<CurrWorkouts/>}/>
