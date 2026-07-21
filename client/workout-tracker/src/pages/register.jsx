@@ -4,8 +4,8 @@ import "../style/login.css"
 
 export function Register() {
     const [form, setForm] = useState({
-        firstName: "",
-        lastName: "",
+        first_name: "",
+        last_name: "",
         email: "",
         password: ""
     })
@@ -44,13 +44,13 @@ export function Register() {
                 <div className="user-info">
                     <label htmlFor="" >First name: </label>
                     <input type="text"
-                        value={form.firstName}
+                        value={form.first_name}
                         onChange={(e) => {
-                            setForm({ ...form, firstName: e.target.value })}} />
+                            setForm({ ...form, first_name: e.target.value })}} />
                     <label htmlFor="" >Last name: </label>
                     <input type="text"
-                        value={form.lastName}
-                        onChange={(e) => { setForm({ ...form, lastName: e.target.value }); }}
+                        value={form.last_name}
+                        onChange={(e) => { setForm({ ...form, last_name: e.target.value }); }}
                     />
                     <label htmlFor="" >email: </label>
                     <input type="email"

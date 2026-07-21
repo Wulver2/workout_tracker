@@ -15,7 +15,7 @@ const verifyToken = (req, res, next) => {
         return res.status(401).json({ message: "no token" });
     }
 
-    jwt.verify(token, process.env.ACCESS_JWT_TOKEN, (err, decoded) => {
+    jwt.verify(token, process.env.ACCESS_JWT_SECRET, (err, decoded) => {
         if (err) {
             res.status(400).json({ message: "failed authentication" })
         }
@@ -33,7 +33,6 @@ router.post('/register', async (req, res) => {
         const { first_name, last_name, email, password } = req.body;
         // check that all fields are defined
         if (!first_name || !last_name || !email || !password) {
-            console.log(first_name, last_name, email, password)
             return res.status(400).json({ message : "missing field"});
         }
         // check if user exists 
@@ -59,12 +58,12 @@ router.post('/register', async (req, res) => {
         //store in http-only cookie
         const refreshToken = jwt.sign(
             registerUser.rows[0].id,
-            process.env.REFRESH_JWT_TOKEN,
+            process.env.REFRESH_JWT_SECRET,
             { expiresIn: "30d" });
 
         const accessToken = jwt.sign(
             registerUser.rows[0].id,
-            process.env.ACCESS_JWT_TOKEN,
+            process.env.ACCESS_JWT_SECRET,
             { expiresIn: "15m" });
 
         res.cookie("refreshToken", refreshToken, {
@@ -112,12 +111,12 @@ router.post('/login', async (req, res) => {
 
         const refreshToken = jwt.sign(
             user_id,
-            process.env.REFRESH_JWT_TOKEN,
+            process.env.REFRESH_JWT_SECRET,
             { expiresIn: "30d" });
 
         const accessToken = jwt.sign(
             user_id,
-            process.env.ACCESS_JWT_TOKEN,
+            process.env.ACCESS_JWT_SECRET,
             { expiresIn: "15m" });
 
         res.cookie("refreshToken", refreshToken, {
@@ -157,14 +156,14 @@ router.post('/refresh', (req, res) => {
         return res.status(401)
     }
 
-    jwt.verify(refreshToken, process.env.REFRESH_JWT_TOKEN, (err, decoded) => {
+    jwt.verify(refreshToken, process.env.REFRESH_JWT_SECRET, (err, decoded) => {
         if (err) {
             return res.status(401)
         }
         // generate new access token
         const accessToken = jwt.sign(
             decoded.id,
-            process.env.ACCESS_JWT_TOKEN,
+            process.env.ACCESS_JWT_SECRET,
             { expiresIn: "15m" }
         );
 
