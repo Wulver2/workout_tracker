@@ -55,14 +55,15 @@ router.post('/register', async (req, res) => {
             hashedPw
         ]);
         // generate token
+        const user_id = registerUser.rows[0].id
         //store in http-only cookie
         const refreshToken = jwt.sign(
-            registerUser.rows[0].id,
+            { user_id },
             process.env.REFRESH_JWT_SECRET,
             { expiresIn: "30d" });
 
         const accessToken = jwt.sign(
-            registerUser.rows[0].id,
+            { user_id },
             process.env.ACCESS_JWT_SECRET,
             { expiresIn: "15m" });
 
@@ -110,12 +111,12 @@ router.post('/login', async (req, res) => {
         const user_id = user.rows[0].id
 
         const refreshToken = jwt.sign(
-            user_id,
+            {user_id},
             process.env.REFRESH_JWT_SECRET,
             { expiresIn: "30d" });
 
         const accessToken = jwt.sign(
-            user_id,
+            {user_id},
             process.env.ACCESS_JWT_SECRET,
             { expiresIn: "15m" });
 
