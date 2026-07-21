@@ -5,19 +5,19 @@ const jwt = require('jsonwebtoken');
 const pool = require("../db");
 const cookieParser = require('cookie-parser');
 const router = express.Router('express');
- 
+
 router.use(cookieParser());
 
 const verifyToken = (req, res, next) => {
     const token = req.headers['authorization'];
 
     if (!token) {
-        return res.status(401).json({message: "no token"});
+        return res.status(401).json({ message: "no token" });
     }
 
     jwt.verify(token, process.env.ACCESS_JWT_TOKEN, (err, decoded) => {
         if (err) {
-            res.status(400).message("failed authentication")
+            res.status(400).json({ message: "failed authentication" })
         }
         else {
             req.user_id = decoded.id;
@@ -33,21 +33,23 @@ router.post('/register', async (req, res) => {
         const { first_name, last_name, email, password } = req.body;
         // check that all fields are defined
         if (!first_name || !last_name || !email || !password) {
-            return res.status(400)
+            console.log(first_name, last_name, email, password)
+            return res.status(400).json({ message : "missing field"});
         }
         // check if user exists 
         const exist = await pool.query(`SELECT * FROM users WHERE email = $1`, [
             email
         ])
         if (exist.rows.length > 0) {
-            return res.status(400);
+            return res.status(400).json({ message: "user exists already" });
         }
         // hash password before storing
         const hashedPw = await bcrypt.hash(password, 10);
 
         const registerUser = await pool.query(`
-        INSERT INTO users (first_name, last_name, email , password)
-        VALUES ($1, $2, $3, $4)`, [
+        INSERT INTO users (first_name, last_name, email, password)
+        VALUES ($1, $2, $3, $4)
+        RETURNING *`, [
             first_name,
             last_name,
             email,
@@ -172,6 +174,6 @@ router.post('/refresh', (req, res) => {
 })
 
 module.exports = {
-    verifyToken, 
+    verifyToken,
     router
 };

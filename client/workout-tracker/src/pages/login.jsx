@@ -39,7 +39,7 @@ export function Login({ setUser }) {
                         onChange={(e) => setForm({ ...form, password: e.target.value })}
                     />
                 </div>
-                <button>log in</button>
+                <button type="submit">log in</button>
             </form>
         </Fragment>
     )
