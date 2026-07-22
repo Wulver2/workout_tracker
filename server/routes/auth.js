@@ -34,7 +34,7 @@ router.post('/register', async (req, res) => {
         const { first_name, last_name, email, password } = req.body;
         // check that all fields are defined
         if (!first_name || !last_name || !email || !password) {
-            return res.status(400).json({ message : "missing field"});
+            return res.status(400).json({ message: "missing field" });
         }
         // check if user exists 
         const exist = await pool.query(`SELECT * FROM users WHERE email = $1`, [
@@ -112,12 +112,12 @@ router.post('/login', async (req, res) => {
         const user_id = user.rows[0].id
 
         const refreshToken = jwt.sign(
-            {user_id},
+            { user_id },
             process.env.REFRESH_JWT_SECRET,
             { expiresIn: "30d" });
 
         const accessToken = jwt.sign(
-            {user_id},
+            { user_id },
             process.env.ACCESS_JWT_SECRET,
             { expiresIn: "15m" });
 
@@ -143,6 +143,16 @@ router.post('/login', async (req, res) => {
 
 })
 
+router.post('/logout', (req, res) => {
+    // get rid of refresh token cookie
+    res.cookie("refreshToken", "", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: "strict",
+    });
+    res.json({ message: "logged out" });
+});
+
 
 router.get('/isAuth', verifyToken, (req, res) => {
     console.log("User is authenticated");
@@ -150,6 +160,7 @@ router.get('/isAuth', verifyToken, (req, res) => {
 })
 
 //occurs when access token expires, needs to check if refresh is still valid
+// this would be better for verify token
 router.post('/refresh', (req, res) => {
     const refreshToken = req.cookies.refreshToken;
 

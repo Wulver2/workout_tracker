@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom"
+import axios from "axios"
 
-export function Navbar({ user }) {
+export function Navbar({ user, setUser }) {
+    const logout = async () => {
+        await axios.post("http://localhost:8080/auth/logout")
+        setUser(null);
+    }
     return (
         <>
             <div id="header">
@@ -9,7 +14,7 @@ export function Navbar({ user }) {
                 <Link to="/new_Workout"> Create New Workout</Link>
                 <Link to="/current_workouts">Current Workouts</Link>
                 {user ? (
-                    <button>logout</button>
+                    <button onClick={logout}>logout</button>
                 ) : (
                     <>
                         <Link to="/login">Log in</Link>
