@@ -20,6 +20,7 @@ const verifyToken = (req, res, next) => {
             res.status(400).json({ message: "failed authentication" })
         }
         else {
+            // get the user based on this id
             req.user_id = decoded.id;
             next();
         }

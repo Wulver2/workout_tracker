@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-export function Navbar() {
+export function Navbar({ user }) {
     return (
         <>
             <div id="header">
@@ -8,8 +8,13 @@ export function Navbar() {
                 <Link to="/exercises">Browse Exercises</Link>
                 <Link to="/new_Workout"> Create New Workout</Link>
                 <Link to="/current_workouts">Current Workouts</Link>
-                <Link to="/login">Log in</Link>
-                <Link to="/register">Sign up</Link>
+                {user ? (
+                    <button>logout</button>
+                ) : (
+                    <>
+                        <Link to="/login">Log in</Link>
+                        <Link to="/register">Sign up</Link>
+                    </>)}
             </div>
         </>
     )
