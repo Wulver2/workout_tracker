@@ -38,7 +38,7 @@ function App() {
           <Route path='/register' element={<Register setUser={setUser} />} />
           <Route path='/exercises' element={<Exercises />} />
           <Route path='/new_workout' element={<NewWorkout user={user}/>} />
-          <Route path='/current_workouts' element={<CurrWorkouts />} />
+          <Route path='/current_workouts' element={<CurrWorkouts user={user}/>} />
         </Route>
       </Routes>
     </Router>
