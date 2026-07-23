@@ -1,11 +1,12 @@
 import { Fragment } from "react";
 import WorkoutForm from "../components/WorkoutForm";
 
-export function NewWorkout() {
+export function NewWorkout({ user }) {
     return (
         <Fragment>
             <h1>Create a new workout</h1>
-            <WorkoutForm />
+            {user ? <WorkoutForm />
+            : <p>Log in or sign up to use this feature</p>}
         </Fragment>
     );
 }

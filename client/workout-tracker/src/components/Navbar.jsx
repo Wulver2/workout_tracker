@@ -19,7 +19,8 @@ export function Navbar({ user, setUser }) {
                     <>
                         <Link to="/login">Log in</Link>
                         <Link to="/register">Sign up</Link>
-                    </>)}
+                    </>
+                )}
             </div>
         </>
     )
