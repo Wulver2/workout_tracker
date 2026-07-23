@@ -109,7 +109,7 @@ const WorkoutForm = ({ og_workout, workout_id, edit = false, re_render }) => {
     //form should initially be hidden for edits
     return (
         <Fragment>
-            <form id="create_workout" className="hide_form" onSubmit={handleSubmit}>
+            <form id="create_workout" className={edit ? "hide-form" : ""} onSubmit={handleSubmit}>
 
                 <div className="form_item">
                     <label htmlFor="workout_name">Name of Workout: </label>
