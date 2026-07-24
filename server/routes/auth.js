@@ -9,6 +9,13 @@ const router = express.Router('express');
 router.use(cookieParser());
 
 const verifyToken = (req, res, next) => {
+    //Rework
+    //Plan get Access token: can I send it in request body (would it be secure)
+    // if it exists and it is a valid token, it can continue to the protected route
+    // if it doesn't exist, send no token
+    // if it exists and isn't valid token, send not a valid token
+    // if it exists and is expired, validate refresh token and issue a new access token
+    // continue to route
     const token = req.headers['authorization'];
 
     if (!token) {
