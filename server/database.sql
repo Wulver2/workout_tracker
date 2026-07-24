@@ -26,6 +26,7 @@ CREATE TABLE workout_session(
 
 ALTER TABLE workout_session ADD name TEXT;
 ALTER TABLE workout_session DROP COLUMN exercise_data;
+ALTER TABLE workout_session ADD user_id INT REFERENCES users(id);
 
 
 CREATE TABLE exercise_sets (
