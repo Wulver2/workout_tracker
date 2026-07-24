@@ -10,20 +10,21 @@ router.use(cookieParser());
 
 const verifyToken = (req, res, next) => {
     //Rework
-    //Plan get Access token: can I send it in request body (would it be secure)
+    //Plan get Access token: should be in request header "authorization" need to set up
     // if it exists and it is a valid token, it can continue to the protected route
     // if it doesn't exist, send no token
     // if it exists and isn't valid token, send not a valid token
     // if it exists and is expired, validate refresh token and issue a new access token
     // continue to route
-    const token = req.headers['authorization'];
+    const accessToken = req.headers['authorization'];
 
-    if (!token) {
+    if (!accessToken || accessToken == "") {
         return res.status(401).json({ message: "no token" });
     }
 
-    jwt.verify(token, process.env.ACCESS_JWT_SECRET, (err, decoded) => {
+    jwt.verify(accessToken, process.env.ACCESS_JWT_SECRET, (err, decoded) => {
         if (err) {
+            //expired
             res.status(400).json({ message: "failed authentication" })
         }
         else {

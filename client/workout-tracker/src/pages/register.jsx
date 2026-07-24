@@ -29,6 +29,7 @@ export function Register({setUser}) {
 
         try {
             const userInfo = await axios.post("http://localhost:8080/auth/register", form);
+            axios.defaults.headers.common["Authorization"] = `${userInfo.data["accessToken"]}`
             setUser(userInfo.data);
 
         } catch (err) {

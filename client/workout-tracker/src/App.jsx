@@ -11,12 +11,15 @@ import './App.css'
 
 axios.defaults.withCredentials = true;
 
+
 function App() {
   const [user, setUser] = useState(null);
+
 
   const getUser = async () => {
     try {
       const res = await axios.get("http://localhost:8080/auth/isAuth");
+      axios.defaults.headers.common["Authorization"] = `${user ? user[0] : ""}`
       setUser(res.data);
 
     } catch (err) {

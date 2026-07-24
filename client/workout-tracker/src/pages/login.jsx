@@ -17,7 +17,7 @@ export function Login({ setUser }) {
             const userInfo = await axios.post("http://localhost:8080/auth/login",
                 form
             );
-
+            axios.defaults.headers.common["Authorization"] = `${userInfo.data["accessToken"]}`
             setUser(userInfo.data);
             //once logged in move to homepage (future dashboard)
         } catch (err) {
