@@ -23,29 +23,30 @@ const verifyToken = (req, res, next) => {
     }
 
     jwt.verify(accessToken, process.env.ACCESS_JWT_SECRET, (err, decoded) => {
-        if (err.name == 'TokenExpiredError') {
-            //exipred issue new token if 
-            // verify refresh token
-            const refreshToken = req.cookies.refreshToken
-            jwt.verify(refreshToken, process.env.REFRESH_JWT_SECRET, (err, decodeRefresh) => {
-                if (err) {
-                    res.status(401).json({ message: "refresh token invalid" });
-                    // navigate to login page
-                }
-                else {
-                    //new access token
-                    const user_id = decodedRefresh.id
-                    jwt.sign(
-                        { user_id },
-                        process.env.ACCESS_JWT_SECRET,
-                        { expiresIn: "15m" })
-                    // send to frontend
-                }
-            })
-
-        }
-        else if (err) {
-            res.status(400).json({ message: "Not a valid token" })
+        if (err) {
+            if (err.name == "TokenExpiredError") {
+                //exipred issue new token if 
+                // verify refresh token
+                const refreshToken = req.cookies.refreshToken
+                jwt.verify(refreshToken, process.env.REFRESH_JWT_SECRET, (err, decodeRefresh) => {
+                    if (err) {
+                        res.status(401).json({ message: "refresh token invalid" });
+                        // navigate to login page
+                    }
+                    else {
+                        //new access token
+                        const user_id = decodedRefresh.id
+                        jwt.sign(
+                            { user_id },
+                            process.env.ACCESS_JWT_SECRET,
+                            { expiresIn: "15m" })
+                        // send to frontend
+                    }
+                })
+            }
+            else {
+                res.status(400).json({ message: "Not a valid token" })
+            }
         }
         else {
             // get the user based on this id
