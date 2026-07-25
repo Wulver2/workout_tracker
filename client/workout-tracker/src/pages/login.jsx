@@ -19,6 +19,7 @@ export function Login({ setUser }) {
             );
             axios.defaults.headers.common["Authorization"] = `${userInfo.data["accessToken"]}`
             setUser(userInfo.data);
+            await axios.get("http://localhost:8080/auth/isAuth");
             //once logged in move to homepage (future dashboard)
         } catch (err) {
             console.error(err.message);

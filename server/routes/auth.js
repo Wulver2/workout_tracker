@@ -23,9 +23,29 @@ const verifyToken = (req, res, next) => {
     }
 
     jwt.verify(accessToken, process.env.ACCESS_JWT_SECRET, (err, decoded) => {
-        if (err) {
-            //expired
-            res.status(400).json({ message: "failed authentication" })
+        if (err.name == 'TokenExpiredError') {
+            //exipred issue new token if 
+            // verify refresh token
+            const refreshToken = req.cookies.refreshToken
+            jwt.verify(refreshToken, process.env.REFRESH_JWT_SECRET, (err, decodeRefresh) => {
+                if (err) {
+                    res.status(401).json({ message: "refresh token invalid" });
+                    // navigate to login page
+                }
+                else {
+                    //new access token
+                    const user_id = decodedRefresh.id
+                    jwt.sign(
+                        { user_id },
+                        process.env.ACCESS_JWT_SECRET,
+                        { expiresIn: "15m" })
+                    // send to frontend
+                }
+            })
+
+        }
+        else if (err) {
+            res.status(400).json({ message: "Not a valid token" })
         }
         else {
             // get the user based on this id
@@ -169,6 +189,7 @@ router.get('/isAuth', verifyToken, (req, res) => {
 
 //occurs when access token expires, needs to check if refresh is still valid
 // this would be better for verify token
+/*
 router.post('/refresh', (req, res) => {
     const refreshToken = req.cookies.refreshToken;
 
@@ -191,7 +212,7 @@ router.post('/refresh', (req, res) => {
         res.json(accessToken);
     })
 
-})
+}) */
 
 module.exports = {
     verifyToken,
