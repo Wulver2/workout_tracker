@@ -49,8 +49,6 @@ const verifyToken = (req, res, next) => {
             }
         }
         else {
-            // get the user based on this id
-            req.user_id = decoded.id;
             next();
         }
     })

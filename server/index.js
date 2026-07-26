@@ -121,6 +121,7 @@ app.post("/workouts", verifyToken, async (req, res) => {
 app.get("/workouts", verifyToken, async (req, res) => {
     //need to get the particular exercise data id to for editing later
     try {
+        const { user_id } = req.body
         const workouts = await pool.query(`
             SELECT wo.session_id, wo.name, wo.day_of_session AS date,
             json_agg(json_build_object(
@@ -133,10 +134,13 @@ app.get("/workouts", verifyToken, async (req, res) => {
                 'sets_id', es.exercise_sets_id
             )) AS exercises
             FROM workout_session AS wo
+            WHERE wo.user_id = $1
             JOIN exercise_sets as es ON wo.session_id = es.session_id
             JOIN exercises as e ON es.exercise_id = e.exercise_id
             GROUP BY wo.session_id
-            ORDER BY session_id DESC;`);
+            ORDER BY session_id DESC;`, [
+                user_id
+            ]);
         res.json(workouts.rows);
 
     } catch (err) {
