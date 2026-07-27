@@ -119,9 +119,18 @@ app.post("/workouts", verifyToken, async (req, res) => {
 
 // Get
 app.get("/workouts", verifyToken, async (req, res) => {
-    //need to get the particular exercise data id to for editing later
+    // send user email, then make a query for the user id
+    // don't want to send user_id to frontend 
     try {
-        const { user_id } = req.body
+        // 
+        const { email } = req.body
+        const {user_id} = await pool.query(`
+            SELECT id 
+            FROM users
+            WHERE email = $1`,[
+                email
+            ])
+        
         const workouts = await pool.query(`
             SELECT wo.session_id, wo.name, wo.day_of_session AS date,
             json_agg(json_build_object(
