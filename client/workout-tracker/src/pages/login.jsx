@@ -37,7 +37,7 @@ export function Login({ setUser }) {
                 </div>
                 <div className="pw">
                     <label htmlFor="" >password: </label>
-                    <input type="text" value={form.password}
+                    <input type="password" value={form.password}
                         onChange={(e) => setForm({ ...form, password: e.target.value })}
                     />
                 </div>

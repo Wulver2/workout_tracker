@@ -6,7 +6,9 @@ const ListWorkouts = () => {
 
     const getWorkouts = async () => {
         try {
-            const res = await fetch("http://localhost:8080/workouts")
+            console.log(user)
+            const res = await fetch("http://localhost:8080/workouts", {
+            })
             const jsonData = await res.json();
 
             setWorkouts(jsonData);
