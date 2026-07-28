@@ -5,7 +5,7 @@ export function CurrWorkouts({ user }) {
     return (
         <Fragment>
             {user ?
-                <ListWorkouts /> : <p>Log in to see your workouts</p>
+                <ListWorkouts user={user}/> : <p>Log in to see your workouts</p>
             }
         </Fragment>
     )

@@ -118,13 +118,13 @@ app.post("/workouts", verifyToken, async (req, res) => {
 });
 
 // Get
-app.get("/workouts", verifyToken, async (req, res) => {
+app.get("/workouts/:email", verifyToken, async (req, res) => {
     // send user email, then make a query for the user id
     // don't want to send user_id to frontend 
     try {
         // 
-        const { email } = req.body
-        const {user_id} = await pool.query(`
+        const { email } = req.params
+        const user_id = await pool.query(`
             SELECT id 
             FROM users
             WHERE email = $1`,[
@@ -143,13 +143,14 @@ app.get("/workouts", verifyToken, async (req, res) => {
                 'sets_id', es.exercise_sets_id
             )) AS exercises
             FROM workout_session AS wo
-            WHERE wo.user_id = $1
             JOIN exercise_sets as es ON wo.session_id = es.session_id
             JOIN exercises as e ON es.exercise_id = e.exercise_id
+            WHERE wo.user_id = $1
             GROUP BY wo.session_id
             ORDER BY session_id DESC;`, [
-                user_id
+                user_id.rows[0].id
             ]);
+        
         res.json(workouts.rows);
 
     } catch (err) {

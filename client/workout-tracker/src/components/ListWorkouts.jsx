@@ -1,15 +1,15 @@
 import React, { Fragment, useEffect, useState } from "react";
+import axios from "axios"
 import WorkoutForm from "./WorkoutForm";
 
-const ListWorkouts = () => {
+const ListWorkouts = ({ user }) => {
     const [workouts, setWorkouts] = useState([]);
 
     const getWorkouts = async () => {
         try {
-            console.log(user)
-            const res = await fetch("http://localhost:8080/workouts", {
-            })
-            const jsonData = await res.json();
+            const { email } = user["user"]
+            const res = await axios.get(`http://localhost:8080/workouts/${email}`)
+            const jsonData = await res.data;
 
             setWorkouts(jsonData);
         } catch (err) {
