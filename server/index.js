@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const pool = require("./db");
-const {verifyToken, router: authRouter} = require('./routes/auth.js');
+const { verifyToken, router: authRouter } = require('./routes/auth.js');
 
 app.use(cors({
     origin: "http://localhost:5176",
@@ -85,14 +85,29 @@ app.delete("/exercises/:id", async (req, res) => {
 // ROUTES for workout_session and exercise_sets
 // TODO: for create and edit workouts connect to user table using id
 // Create
-app.post("/workouts", verifyToken, async (req, res) => {
+app.post("/workouts:email", verifyToken, async (req, res) => {
     try {
+        const email = req.params;
         const { name, date, sessionExercises } = req.body;
+        
+        const user_id = await pool.query(`
+            SELECT id 
+            FROM users
+            WHERE email = $1`, [
+            email
+        ]).rows[0].id
+
+        console.log(user_id)
+
         // need to return session id so i can use them for a
         // column in exercise_sets
         const newSession = await pool.query(
-            `INSERT INTO workout_session (name, day_of_session)
-            VALUES ('${name}', '${date}') RETURNING session_id`);
+            `INSERT INTO workout_session (name, day_of_session, user_id)
+            VALUES ($1, $2, $3) RETURNING session_id`, [
+                name,
+                date,
+                user_id
+            ]);
 
         const session_id = newSession.rows[0].session_id;
 
@@ -127,10 +142,10 @@ app.get("/workouts/:email", verifyToken, async (req, res) => {
         const user_id = await pool.query(`
             SELECT id 
             FROM users
-            WHERE email = $1`,[
-                email
-            ])
-        
+            WHERE email = $1`, [
+            email
+        ])
+
         const workouts = await pool.query(`
             SELECT wo.session_id, wo.name, wo.day_of_session AS date,
             json_agg(json_build_object(
@@ -148,9 +163,9 @@ app.get("/workouts/:email", verifyToken, async (req, res) => {
             WHERE wo.user_id = $1
             GROUP BY wo.session_id
             ORDER BY session_id DESC;`, [
-                user_id.rows[0].id
-            ]);
-        
+            user_id.rows[0].id
+        ]);
+
         res.json(workouts.rows);
 
     } catch (err) {
