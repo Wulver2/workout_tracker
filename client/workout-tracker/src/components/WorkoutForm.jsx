@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from "react"
 
 
-const WorkoutForm = ({ og_workout, workout_id, edit = false, re_render }) => {
+const WorkoutForm = ({ og_workout, workout_id, edit = false, re_render, email }) => {
     // for exercise form drop down
     const [availableExercises, setAvailableExercises] = useState([]);
 
@@ -85,7 +85,7 @@ const WorkoutForm = ({ og_workout, workout_id, edit = false, re_render }) => {
         console.log(sessionExercises);
         try {
             const method = edit ? "PUT" : "POST"
-            const url = edit ? `http://localhost:8080/workouts/${workout_id}` : "http://localhost:8080/workouts";
+            const url = edit ? `http://localhost:8080/workouts/${workout_id}` : `http://localhost:8080/workouts/${email}`;
             const body = { name, date, sessionExercises };
             const response = await fetch(url, {
                 method: method,

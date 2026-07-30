@@ -85,7 +85,7 @@ app.delete("/exercises/:id", async (req, res) => {
 // ROUTES for workout_session and exercise_sets
 // TODO: for create and edit workouts connect to user table using id
 // Create
-app.post("/workouts:email", verifyToken, async (req, res) => {
+app.post("/workouts/:email", verifyToken, async (req, res) => {
     try {
         const email = req.params;
         const { name, date, sessionExercises } = req.body;
