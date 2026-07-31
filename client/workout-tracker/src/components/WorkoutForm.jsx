@@ -1,4 +1,5 @@
 import { Fragment, useState, useEffect } from "react"
+import axios from "axios"
 
 
 const WorkoutForm = ({ og_workout, workout_id, edit = false, re_render, email }) => {
@@ -84,14 +85,23 @@ const WorkoutForm = ({ og_workout, workout_id, edit = false, re_render, email })
         e.preventDefault();
         console.log(sessionExercises);
         try {
-            const method = edit ? "PUT" : "POST"
+            //const method = edit ? "PUT" : "POST"
             const url = edit ? `http://localhost:8080/workouts/${workout_id}` : `http://localhost:8080/workouts/${email}`;
             const body = { name, date, sessionExercises };
+            let response;
+
+            if (edit) {
+                response = await axios.put(url, body)
+            }
+            else {
+                response = await axios.post(url, body)
+            }
+            /*
             const response = await fetch(url, {
                 method: method,
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
-            });
+            }); */
             // re render workouts with updated data
             if (response.ok) {
                 if (re_render) {

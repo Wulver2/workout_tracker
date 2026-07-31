@@ -17,6 +17,7 @@ const verifyToken = (req, res, next) => {
     // if it exists and is expired, validate refresh token and issue a new access token
     // continue to route
     const accessToken = req.headers['authorization'];
+    console.log(accessToken)
 
     if (!accessToken || accessToken == "") {
         return res.status(401).json({ message: "no token" });
