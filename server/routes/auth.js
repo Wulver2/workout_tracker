@@ -3,10 +3,10 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pool = require("../db");
-const cookieParser = require('cookie-parser');
+//const cookieParser = require('cookie-parser');
 const router = express.Router('express');
 
-router.use(cookieParser());
+//router.use(cookieParser());
 
 const verifyToken = (req, res, next) => {
     //Rework
@@ -25,8 +25,8 @@ const verifyToken = (req, res, next) => {
     jwt.verify(accessToken, process.env.ACCESS_JWT_SECRET, (err, decoded) => {
         if (err) {
             if (err.name == "TokenExpiredError") {
-                //exipred issue new token if 
                 // verify refresh token
+                // Problem with acquiring refresh token
                 const refreshToken = req.cookies.refreshToken
                 jwt.verify(refreshToken, process.env.REFRESH_JWT_SECRET, (err, decodeRefresh) => {
                     if (err) {

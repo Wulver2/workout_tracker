@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const pool = require("./db");
+const cookieParser = require('cookie-parser');
 const { verifyToken, router: authRouter } = require('./routes/auth.js');
 
 app.use(cors({
@@ -11,6 +12,7 @@ app.use(cors({
 
 app.use(express.json());
 app.use("/auth", authRouter); // workout routes will be protected
+app.use(cookieParser())
 
 // EXERCISE ROUTES (may move these to their own file in routes folder)
 // Get all exercises
