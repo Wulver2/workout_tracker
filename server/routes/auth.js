@@ -28,19 +28,21 @@ const verifyToken = (req, res, next) => {
                 // verify refresh token
                 // Problem with acquiring refresh token
                 const refreshToken = req.cookies.refreshToken
-                jwt.verify(refreshToken, process.env.REFRESH_JWT_SECRET, (err, decodeRefresh) => {
+                jwt.verify(refreshToken, process.env.REFRESH_JWT_SECRET, (err, decoded) => {
                     if (err) {
                         res.status(401).json({ message: "refresh token invalid" });
                         // navigate to login page
                     }
                     else {
                         //new access token
-                        const user_id = decodedRefresh.id
+                        const user_id = decoded.id
                         jwt.sign(
                             { user_id },
                             process.env.ACCESS_JWT_SECRET,
                             { expiresIn: "15m" })
                         // send to frontend
+
+                        next();
                     }
                 })
             }
