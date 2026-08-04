@@ -1,8 +1,10 @@
 import React, { Fragment, useState } from "react"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 import "../style/login.css"
 
 export function Register({setUser}) {
+    const navigate = useNavigate();
     const [form, setForm] = useState({
         first_name: "",
         last_name: "",
@@ -31,6 +33,7 @@ export function Register({setUser}) {
             const userInfo = await axios.post("http://localhost:8080/auth/register", form);
             axios.defaults.headers.common["Authorization"] = `${userInfo.data["accessToken"]}`
             setUser(userInfo.data);
+            navigate("/");
 
         } catch (err) {
             console.error(err.message);

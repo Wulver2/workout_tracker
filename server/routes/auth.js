@@ -41,7 +41,7 @@ const verifyToken = (req, res, next) => {
                             process.env.ACCESS_JWT_SECRET,
                             { expiresIn: "15m" })
                         // send to frontend
-
+                        
                         next();
                     }
                 })

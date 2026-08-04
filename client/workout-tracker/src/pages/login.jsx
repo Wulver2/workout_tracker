@@ -1,9 +1,11 @@
 import React, { Fragment, useState } from "react"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 import "../style/login.css"
 
 export function Login({ setUser }) {
     // firstname, lastname, email, password
+    const navigate = useNavigate();
     const [form, setForm] = useState({
         email: "",
         password: ""
@@ -19,8 +21,8 @@ export function Login({ setUser }) {
             );
             axios.defaults.headers.common["Authorization"] = `${userInfo.data["accessToken"]}`
             setUser(userInfo.data);
-            await axios.get("http://localhost:8080/auth/isAuth");
             //once logged in move to homepage (future dashboard)
+            navigate("/");
         } catch (err) {
             console.error(err.message);
         }
