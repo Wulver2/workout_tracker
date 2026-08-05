@@ -188,33 +188,6 @@ router.get('/isAuth', verifyToken, (req, res) => {
     //returns user info
 })
 
-//occurs when access token expires, needs to check if refresh is still valid
-// this would be better for verify token
-/*
-router.post('/refresh', (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-
-    // front end will send them back to login
-    if (!refreshToken) {
-        return res.status(401)
-    }
-
-    jwt.verify(refreshToken, process.env.REFRESH_JWT_SECRET, (err, decoded) => {
-        if (err) {
-            return res.status(401)
-        }
-        // generate new access token
-        const accessToken = jwt.sign(
-            decoded.id,
-            process.env.ACCESS_JWT_SECRET,
-            { expiresIn: "15m" }
-        );
-
-        res.json(accessToken);
-    })
-
-}) */
-
 module.exports = {
     verifyToken,
     router

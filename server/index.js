@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const { verifyToken, router: authRouter } = require('./routes/auth.js');
 
 app.use(cors({
-    origin: "http://localhost:5176",
+    origin: "http://localhost:5173",
     credentials: true
 }));
 
