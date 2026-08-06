@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 export function Navbar({ user, setUser }) {
+    const navigate = useNavigate();
+
     const logout = async () => {
         await axios.post("http://localhost:8080/auth/logout")
         setUser(null);
+        navigate("/");
     }
     return (
         <>
