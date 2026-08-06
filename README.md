@@ -9,9 +9,9 @@ Current:
 * Search and filter exercises based on name, equipment, and muscle groups targeted
 * Update and add new exercises to existing workouts
 * Remove exercises from existing workouts
+* User's can log in and create new accounts protected by JWT tokens
 
 Upcoming:
-* User authentication
 * Dashboard: quick view of last workout(s), display of new PR
 ## Built With
 * Frontend: React

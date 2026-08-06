@@ -178,6 +178,7 @@ router.post('/logout', (req, res) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: "strict",
+        maxAge: 1
     });
     res.json({ message: "logged out" });
 });
