@@ -6,7 +6,7 @@ const pool = require("../db");
 //const cookieParser = require('cookie-parser');
 const router = express.Router('express');
 
-//router.use(cookieParser());
+const isProduction = process.env.NODE_ENV === 'production';
 
 const verifyToken = (req, res, next) => {
     //Rework
@@ -99,8 +99,8 @@ router.post('/register', async (req, res) => {
 
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: "strict",
+            secure: isProduction,
+            sameSite: isProduction ? "none" : "strict",
             maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
         })
         // respond with access token to be stored in state
@@ -152,8 +152,8 @@ router.post('/login', async (req, res) => {
 
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: "strict",
+            secure: isProduction,
+            sameSite: isProduction ? "none" : "strict",
             maxAge: 30 * 24 * 60 * 60 * 1000 //30 days
         })
 
@@ -176,8 +176,8 @@ router.post('/logout', (req, res) => {
     // get rid of refresh token cookie
     res.cookie("refreshToken", "", {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: "strict",
+        secure: isProduction,
+        sameSite: isProduction ? "none" : "strict",
         maxAge: 1
     });
     res.json({ message: "logged out" });
