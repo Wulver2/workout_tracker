@@ -7,6 +7,7 @@ import { CurrWorkouts } from './pages/currWorkouts';
 import { Register } from './pages/register';
 import { Login } from './pages/login';
 import { Layout } from './components/Layout';
+import { API_URL } from './api.js';
 import './App.css'
 
 axios.defaults.withCredentials = true;
@@ -18,7 +19,7 @@ function App() {
 
   const getUser = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/auth/isAuth");
+      const res = await axios.get(`${API_URL}/auth/isAuth`);
       axios.defaults.headers.common["Authorization"] = `${user ? user[0] : ""}`
       setUser(res.data);
 

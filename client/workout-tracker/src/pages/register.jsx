@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import "../style/login.css"
+import { API_URL } from "../api.js"
 
 export function Register({setUser}) {
     const navigate = useNavigate();
@@ -30,7 +31,7 @@ export function Register({setUser}) {
         e.preventDefault();
 
         try {
-            const userInfo = await axios.post("http://localhost:8080/auth/register", form);
+            const userInfo = await axios.post(`${API_URL}/auth/register`, form);
             axios.defaults.headers.common["Authorization"] = `${userInfo.data["accessToken"]}`
             setUser(userInfo.data);
             navigate("/");

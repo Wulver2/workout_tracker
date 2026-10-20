@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { API_URL } from "../api.js";
 
 const ListExercises = () => {
     const [exercises, setExercises] = useState([]);
@@ -8,13 +9,13 @@ const ListExercises = () => {
     const getExercises = async (mus, equip) => {
         try {
             if (mus != "" || equip != "") {
-                const response = await fetch(`http://localhost:8080/exercises/${mus}&${equip}`);
+                const response = await fetch(`${API_URL}/exercises/${mus}&${equip}`);
                 const jsonData = await response.json();
 
                 setExercises(jsonData)
             }
             else {
-                const response = await fetch(`http://localhost:8080/exercises`);
+                const response = await fetch(`${API_URL}/exercises`);
                 const jsonData = await response.json();
 
                 setExercises(jsonData)
@@ -35,7 +36,7 @@ const ListExercises = () => {
             // need to make sure the searches match that
             input = input.toLowerCase()
 
-            const response = await fetch(`http://localhost:8080/exercises/${input}`);
+            const response = await fetch(`${API_URL}/exercises/${input}`);
             const jsonData = await response.json();
 
             setExercises(jsonData);

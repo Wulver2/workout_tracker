@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import "../style/login.css"
+import { API_URL } from "../api.js"
 
 export function Login({ setUser }) {
     // firstname, lastname, email, password
@@ -16,7 +17,7 @@ export function Login({ setUser }) {
         e.preventDefault();
 
         try {
-            const userInfo = await axios.post("http://localhost:8080/auth/login",
+            const userInfo = await axios.post(`${API_URL}/auth/login`,
                 form
             );
             axios.defaults.headers.common["Authorization"] = `${userInfo.data["accessToken"]}`

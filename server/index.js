@@ -4,6 +4,9 @@ const cors = require("cors");
 const pool = require("./db");
 const cookieParser = require('cookie-parser');
 const { verifyToken, router: authRouter } = require('./routes/auth.js');
+require('dotenv').config(); 
+
+const PORT = process.env.PORT || 8080;
 
 app.use(cors({
     origin: "http://localhost:5173",
@@ -248,6 +251,6 @@ app.delete("/workouts/:id", verifyToken, async (req, res) => {
     }
 })
 
-app.listen(8080, () => {
-    console.log("server 8080 is on");
+app.listen(PORT, () => {
+    console.log(`server ${PORT} is on`);
 });

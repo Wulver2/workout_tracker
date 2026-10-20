@@ -1,5 +1,6 @@
 import { Fragment, useState, useEffect } from "react"
 import axios from "axios"
+import { API_URL } from "../api.js";
 
 
 const WorkoutForm = ({ og_workout, workout_id, edit = false, re_render, email }) => {
@@ -21,7 +22,7 @@ const WorkoutForm = ({ og_workout, workout_id, edit = false, re_render, email })
     //Send query to get exercises
     const getAvailableExercises = async () => {
         try {
-            const res = await fetch("http://localhost:8080/exercises");
+            const res = await fetch(`${API_URL}/exercises`);
             const jsonData = await res.json();
 
             setAvailableExercises(jsonData);
@@ -86,7 +87,7 @@ const WorkoutForm = ({ og_workout, workout_id, edit = false, re_render, email })
         console.log(sessionExercises);
         try {
             //const method = edit ? "PUT" : "POST"
-            const url = edit ? `http://localhost:8080/workouts/${workout_id}` : `http://localhost:8080/workouts/${email}`;
+            const url = edit ? `${API_URL}/workouts/${workout_id}` : `${API_URL}/workouts/${email}`;
             const body = { name, date, sessionExercises };
             let response;
 

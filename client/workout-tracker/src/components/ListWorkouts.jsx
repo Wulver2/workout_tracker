@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios"
 import WorkoutForm from "./WorkoutForm";
+import { API_URL } from "../api.js";
 
 const ListWorkouts = ({ user }) => {
     const [workouts, setWorkouts] = useState([]);
@@ -8,7 +9,7 @@ const ListWorkouts = ({ user }) => {
     const getWorkouts = async () => {
         try {
             const { email } = user["user"]
-            const res = await axios.get(`http://localhost:8080/workouts/${email}`)
+            const res = await axios.get(`${API_URL}/workouts/${email}`)
             const jsonData = await res.data;
 
             setWorkouts(jsonData);
@@ -19,7 +20,7 @@ const ListWorkouts = ({ user }) => {
 
     const deleteWorkout = async (id) => {
         try {
-            const deleteWorkout = await fetch(`http://localhost:8080/workouts/${id}`, {
+            const deleteWorkout = await fetch(`${API_URL}/workouts/${id}`, {
                 method: "DELETE"
             });
 
@@ -46,7 +47,7 @@ const ListWorkouts = ({ user }) => {
                 })
             );
 
-            const deleteEx = await fetch(`http://localhost:8080/exercises/${id}`, {
+            const deleteEx = await fetch(`${API_URL}/exercises/${id}`, {
                 method: "DELETE"
             });
 
