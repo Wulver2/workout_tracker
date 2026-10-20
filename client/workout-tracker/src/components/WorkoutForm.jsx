@@ -84,7 +84,7 @@ const WorkoutForm = ({ og_workout, workout_id, edit = false, re_render, email })
         // inserts name, array of ids, and date to workout_session table
         // exercise_sets order (exercise_id, reps, sets, rir)
         e.preventDefault();
-        console.log(sessionExercises);
+
         try {
             //const method = edit ? "PUT" : "POST"
             const url = edit ? `${API_URL}/workouts/${workout_id}` : `${API_URL}/workouts/${email}`;

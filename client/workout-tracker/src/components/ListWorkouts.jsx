@@ -78,7 +78,6 @@ const ListWorkouts = ({ user }) => {
     const show = () => {
         const hidden_form = document.getElementById("create_workout");
         hidden_form.classList.remove("hide_form");
-        console.log(workouts)
 
     };
 
